@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!-- Copyright 2011 Enzymatic Software, LLC.  All Rights Reserved. -->
+<!DOCTYPE window SYSTEM "chrome://downbar/locale/downbartext.dtd">
+
+<?xml-stylesheet href="chrome://downbar/skin/downbaroverlayNew.css" type="text/css"?>
+<?xml-stylesheet href="chrome://downbar/skin/cloud/style.css" type="text/css"?>
+
+<overlay id="downbarOverlay"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:nc="http://home.netscape.com/NC-rdf#"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/js/jquery-1.4.4.min.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/context-menu.js"/>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/background.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/cloudsave.js"></script>
+
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/js/sha1.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/js/md5.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/files.js"></script>
+
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/keys.js"></script>
+
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/imgur.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/immio.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/imageshack.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/hotfile.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/box.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/minus.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/sugarsync.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/cloudapp.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/facebook.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/flickr.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/clouddrive.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/skydrive.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/google/chrome_ex_oauthsimple.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/google/chrome_ex_oauth.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/google/google.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/google/picasa.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/google/docs.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/dropbox/oauth.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/dropbox/modern_dropbox.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/dropbox/dropbox.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/webdav/webdav.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/webdav/dav.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/twitter.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/twitpic.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/twitgoo.js"></script>
+
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/posterous.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/twitrpix.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/imgly.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/droplr.js"></script>
+
+  <popup id="contentAreaContextMenu">
+    <menu id="dsbCmRoot" label="&cmRoot.label;" class="menu-iconic dsb-context-menu-root">
+      <menupopup id="dsbCmContainer">
+        <menu label="&cmSaveAs.label;">
+          <menupopup id="dsbCmSaveAs">
+            <!-- add entries here -->
+            <menu class="entries-before-me" label="&cmMore.label;">
+              <menupopup id="dsbCmSaveAsMore">
+                <!-- add entries here -->
+                <menuseparator class="image-host-sep"/>
+              </menupopup>
+            </menu>
+          </menupopup>
+        </menu>
+        <menuseparator/>
+        <!-- add entries here -->
+        <menu class="entries-before-me" label="&cmMore.label;">
+          <menupopup id="dsbCmMore">
+            <!-- add entries here -->
+            <menuseparator class="image-host-sep"/>
+            <menuseparator class="settings-sep"/>
+            <menuitem id="dsbCmSettings" label="&cmSettings.label;"/>
+          </menupopup>
+        </menu>
+      </menupopup>
+    </menu>
+  </popup>
+
+</overlay>

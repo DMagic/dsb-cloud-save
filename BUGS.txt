@@ -1,0 +1,9 @@
+Firefox 3.6
+====
+Uint8Array not supported
+Blob, BlobBuilder not supported
+
+Linux
+====
+box-shadow of the tooltip create ugly black border
+

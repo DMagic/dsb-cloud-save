@@ -1,0 +1,58 @@
+chrome.manifest
+====
+1. expand jar, use local directories
+2. add cloud save files
+
+chrome/content/downbarprefs.(js|xul)
+====
+add cloud save tab in the preference page
+
+chrome/content/downbaroverlay.(js|xul)
+chrome/content/downbaroverlayNew.(js|xul)
+chrome/skin/downbaroverlay.css
+chrome/skin/downbaroverlayNew.css
+====
+update tooltip UI, add cloud save controls
+
+defaults/preferences/downbarconfig.js
+====
+add default cloud save preferences
+
+chrome/locale/en-US/downbartext.dtd
+====
+add locale text
+
+NEW chrome/content/cloud/context-menu.js
+====
+context menu modification, load 
+
+NEW chrome/content/cloud/cloudsave.xul
+====
+load all cloud save JS scripts
+
+NEW chrome/content/cloud/cloudsave-interface.js
+====
+provide cloud save functionality to other modules in the extension
+
+NEW chrome/content/cloud/notification.(js|xul)
+====
+cloud save progress notification
+
+chrome/content/cloud/background.js
+chrome/content/cloud/cloudsave.js
+====
+modified to support firefox
+
+chrome/content/cloud/hosts/skydrive.js
+====
+div.innerText --> div.textContent, incorporate latest skydrive site upgrade
+
+chrmoe/content/cloud/hosts/sugarsync.js
+====
+explicitly set content type in xhr request
+handle ArrayBuffer in firefox
+
+chrmoe/content/cloud/hosts/google/*.js
+====
+make code compatibile in firefox
+handle ArrayBuffer in firefox

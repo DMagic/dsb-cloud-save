@@ -1,0 +1,7 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* Copyright 2011 Enzymatic Software, LLC.  All Rights Reserved. */
+
+#downbarMini {
+	list-style-image: url("chrome://downbar/skin/download_manager.png");
+}

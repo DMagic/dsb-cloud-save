@@ -1,0 +1,30 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+
+.hidden {
+	display: none;
+}
+
+/* context menu icon */
+.dsb-context-menu-root {
+	list-style-image: url(chrome://downbar/skin/downbarIcon.png);
+}
+
+/* notification box */
+#dsbNotification .alertBox {
+	background-color: white;
+	padding-bottom: 10px;
+}
+
+#dsbNotification #alertTextLabel,
+#dsbNotification #alertTitleLabel {
+	max-width: 20em;
+	cursor: pointer;
+}
+
+.close-box {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	cursor: pointer;
+}
