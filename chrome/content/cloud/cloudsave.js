@@ -39,7 +39,7 @@ if (isFirefox) {
 	}
 
 	/* Firefox 3.* doesn't have a console object built-in, add this to suppress
-	errors in older version of Firefox, it's not working yet */
+	errors in older version of Firefox, it's not meant to function exactly like console.log */
 	if ('undefined' === typeof window.console) {
 		window.console = {
 			log: function() {
@@ -64,7 +64,28 @@ if (isFirefox) {
 		var ret= [], p;
 		for(p in o) if (Object.prototype.hasOwnProperty.call(o, p)) ret.push(p);
 		return ret;
-	}
+	};
+
+	/* Firefox 3.* doesn't have Function.prototype.bind(), copied from:
+	https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind */
+	if (!Function.prototype.bind) Function.prototype.bind = function (oThis) {
+		if (typeof this !== "function") {
+			// closest thing possible to the ECMAScript 5 internal IsCallable function
+			throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+		}
+		
+		var aArgs = Array.prototype.slice.call(arguments, 1),
+			fToBind = this, fNOP = function () {},
+			fBound = function () {
+				return fToBind.apply(this instanceof fNOP ? this : oThis || window,
+					aArgs.concat(Array.prototype.slice.call(arguments)));
+        	};
+
+		fNOP.prototype = this.prototype;
+		fBound.prototype = new fNOP();
+		
+		return fBound;
+	};
 } else {
 	window.cloudSavePreference = {
 		getItem: function(key) {
@@ -566,6 +587,20 @@ function DsbNotification(args) {
 			if (isChrome) doc.body.style.backgroundImage = 'url(' + args.image + ')';
 			else doc.getElementById('alertImage').setAttribute('src', 'chrome://downbar/skin/cloud/' + args.image);
 		}
+		/* update event handlers */
+		if (args.events) {
+			for (var ev in args.events) {
+				if (/^on(display|click|close)$/.test(ev)) {
+					if (isChrome) this.wnd[ev] = args.events[ev];
+					else {
+						var ev1 = 'ondisplay' == ev ? 'load' : ev.replace(/^on/, '');
+						this.wnd.removeEventListener(ev1, this.events[ev], false);
+						this.wnd.addEventListener(ev1, args.events[ev], false);
+					}
+					this.events[ev] = args.events[ev];
+				}
+			}
+		}
 
 		/* adjust box size */
 		if (isFirefox) {
@@ -612,6 +647,10 @@ function DsbNotification(args) {
 
 	args = args || {};
 
+	this.events = {};
+	this.events.ondisplay = args.ondisplay;
+	this.events.onclick = args.onclick;
+	this.events.onclose = args.onclose;
 	if (isChrome) {
 		this.wnd = webkitNotifications.createHTMLNotification('popup.html?' + args.id);
 		this.wnd.ondisplay = args.ondisplay ? args.ondisplay : function() {};
@@ -681,6 +720,10 @@ function upload(host, url, name) {
 				status: "The file '"+wbr(name,8)+"' could not be uploaded to "+title_map[host]+". "+e.substr(6),
 				progress: { display: 'none' }
 			})
+		/* respond to click event doesn't make sense anymore */
+		notification.update({
+			events: { onclick: function() {} }
+		})
     }else{
 	    notification.update({
 				image: 'icon/64.png',
@@ -715,7 +758,6 @@ window.addEventListener('load', function() {
 			1. quantity (2 > 1)
 			2. position (end > beginning)
 	*/
-dump('in');
 	try {
 		recent = JSON.parse(cloudSavePreference.getItem('cloudsave_recent'));
 	}catch(err){

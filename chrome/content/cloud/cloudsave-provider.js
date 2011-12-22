@@ -27,13 +27,15 @@ if ('undefined' === typeof DsbCSProvider) {
 			} else {
 				/* construct hosts */
 				for (ctx in browser.original)
-					for (host in browser.original[ctx]) {
-						elem = document.createElement('menuitem');
-						elem.setAttribute('label', browser.original[ctx][host]);
-						elem.setAttribute('value', host);
-						elem.context = ctx;
-						hosts.appendChild(elem);
-					}
+					/* ignore link type hosts (just dropdo) as they only save remote files */
+					if ('link' !== ctx)
+						for (host in browser.original[ctx]) {
+							elem = document.createElement('menuitem');
+							elem.setAttribute('label', browser.original[ctx][host]);
+							elem.setAttribute('value', host);
+							elem.context = ctx;
+							hosts.appendChild(elem);
+						}
 				for (ctx in browser.additional)
 					for (host in browser.additional[ctx]) {
 						elem = document.createElement('menuitem');
@@ -68,12 +70,15 @@ if ('undefined' === typeof DsbCSProvider) {
 						url = browser.URL.createObjectURL(file);
 					} else if (browser.webkitURL && browser.webkitURL.createObjectURL) {
 						url = browser.webkitURL.createObjectURL(file);
+					} else {
+						/* Firefox 3.*, AGAIN! */
+						url = file.getAsDataURL();
 					}
 					if (!/^image\//i.test(file.type) && 'image' == host.context) {
 						alert(host.label + ' accepts images only, ' + file.name + ' will be skipped.');
 						continue;
 					}
-					/* Picasa requires mime type */
+					/* also send mime type for it's required by some hosts (i.e., Picasa) */
 					browser.upload(host.value, {url: url, type: file.type}, file.name);
 				} else if (local) {
 					/* convert to file uri */
@@ -82,7 +87,7 @@ if ('undefined' === typeof DsbCSProvider) {
 						url = 'file:///' + url.replace(/^\//, '');
 					url = url.replace('\\', '/');
 					/* get file name */
-					file = file.replace(/.+\//, '');
+					file = url.replace(/.+\//, '');
 
 					/* TODO: better way to provide mime type */
 					if (/\.(gif|j(p|pe|e)g|png|bmp|tif?f)$/i.test(file))

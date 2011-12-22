@@ -12,14 +12,22 @@ if (window.Blob) {
 	}
 }
 
-function loginTab(loginurl, string, cb){
+function loginTab(loginurl, string, cb) {
+  var test = function(url) {
+    if ('string' === typeof string)
+      return url.indexOf(string) != -1;
+    else
+      /* regular expression */
+      return string.test(url);
+  }
+
 	if(typeof chrome != 'undefined'){
     chrome.tabs.create({
       url: loginurl
     }, function(tab){
       var poll = function(){
         chrome.tabs.get(tab.id, function(info){
-          if(info.url.indexOf(string) != -1){
+          if(test(info.url)){
             cb(info.url);
             chrome.tabs.remove(tab.id);
           }else{
@@ -34,7 +42,7 @@ function loginTab(loginurl, string, cb){
       url: loginurl,
       onOpen: function(tab){
         var poll = function(){
-          if(tab.url.indexOf(string) != -1){
+          if(test(tab.url)){
             cb(tab.url);
             tab.close();
           }else{
@@ -46,10 +54,10 @@ function loginTab(loginurl, string, cb){
     })
   } else if ('undefined' != typeof gBrowser) {
 		var tab = gBrowser.addTab(loginurl), tbrowser = gBrowser.getBrowserForTab(tab);
-		tbrowser.addEventListener('load', function(e) {
+		var handler = function(e) {
 			var poll = function() {
 				var url = gBrowser.currentURI.spec;
-				if (-1 != url.indexOf(string)) {
+				if (test(url)) {
 					cb(url);
 					gBrowser.removeTab(tab);
 				} else {
@@ -57,7 +65,10 @@ function loginTab(loginurl, string, cb){
 				}
 			}
 			poll();
-		}, true);
+      /* the load event is triggered many many times, on both 3.* and 8.*, should I listen to another event? */
+      tbrowser.removeEventListener('load', handler, true);
+		};
+    tbrowser.addEventListener('load', handler, true);
 		gBrowser.selectedTab = tab;
 	} else {
 		console.log("Don't know how to open the login tab\n");
@@ -205,8 +216,13 @@ function getBuffer(request, callback){
 	getURL(abuf?'arraybuffer':'raw', request, function(file){
 		console.log(abuf, file);
 		if(abuf){
-			callback(file)
-		}else{
+			callback(file);
+		} else if (typeof Uint8Array == 'undefined') {
+      var raw = file.data, len = file.size, data = '', i;
+      for (i = 0; i < len; data += String.fromCharCode(raw.charCodeAt(i++) & 0xff));
+      file.data = data;
+      callback(file);
+    } else {
 			var bin = file.data
 		  var arr = new Uint8Array(bin.length);
 		  for(var i = 0, l = bin.length; i < l; i++)

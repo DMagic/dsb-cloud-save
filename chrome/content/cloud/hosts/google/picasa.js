@@ -21,8 +21,17 @@ Hosts.picasa = function uploadPicasa(req, callback){
   };
   
   getBuffer(req, function(file){
-		var builder = new BlobBuilder();
-		builder.append(file.abuf);
+		var builder;
+    if ('undefined' !== typeof BlobBuilder) {
+      builder = new BlobBuilder();
+      builder.append(file.abuf);
+      builder = builder.getBlob(file.type);
+    } else {
+      builder = {
+        data: file.data,
+        sendAsBinary: true
+      }
+    }
   
   
   function complete(resp, xhr){
@@ -77,7 +86,7 @@ xmlns:media='http://search.yahoo.com/mrss/'\
           parameters: {
             alt: 'json'
           },
-          body: builder.getBlob(file.type)
+          body: builder
         });
         
   

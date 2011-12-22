@@ -1,13 +1,16 @@
 content	  downbar	            chrome/content/
 skin      downbar  classic/1.0  chrome/skin/classic/
 
-overlay	 chrome://browser/content/browser.xul                   chrome://downbar/content/downbaroverlay.xul       appversion<4.0b7pre
-overlay	 chrome://browser/content/browser.xul                   chrome://downbar/content/downbaroverlayNew.xul    appversion>=4.0b7pre
+overlay	 chrome://browser/content/browser.xul                   chrome://downbar/content/downbaroverlay.xul         appversion<4.0b7pre
+overlay	 chrome://browser/content/browser.xul                   chrome://downbar/content/downbaroverlayNew.xul      appversion>=4.0b7pre
 overlay  chrome://browser/content/browser.xul                   chrome://downbar/content/cloud/cloudsave.xul
 
 overlay  chrome://browser/content/preferences/preferences.xul   chrome://downbar/content/privacyPrefsOverlay.xul
 
 style    chrome://global/content/customizeToolbar.xul           chrome://downbar/skin/downbarToolbarStyle.css
+# linux style fix
+style    chrome://downbar/content/downbaroverlay.xul            chrome://downbar/skin/cloud/linux.css               os=Linux
+style    chrome://downbar/content/downbaroverlayNew.xul         chrome://downbar/skin/cloud/linux.css               os=Linux
 
 component {D4EE4143-3560-44c3-B170-4AC54D7D8AC1} components/downbar.js
 contract @devonjensen.com/downbar/downbar;1 {D4EE4143-3560-44c3-B170-4AC54D7D8AC1}

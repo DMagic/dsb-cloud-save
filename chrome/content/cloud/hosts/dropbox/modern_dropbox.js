@@ -218,7 +218,7 @@ var ModernDropbox = function(consumerKey, consumerSecret) {
 								+ authTokens["requestToken"] 
 								+ "&oauth_callback=" 
 								+ _authCallback;
-		          loginTab(url, 'uid=', init);
+							loginTab(url, 'uid=', init);
 						}).bind(this)
 					});
 				} else {

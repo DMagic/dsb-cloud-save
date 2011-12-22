@@ -451,7 +451,7 @@
 	margin: -33px 0 0 -8px;
 	width: 126px;
 	height: 80px;
-	background: url(chrome://downbar/skin/tooltip-sprites.png) 0 0 repeat-x;
+	background: url(chrome://downbar/skin/tooltip-sprites.png) 0 0 no-repeat;
 }
 
 .tt-cloud-descr {

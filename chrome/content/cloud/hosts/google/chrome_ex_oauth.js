@@ -338,7 +338,12 @@ ChromeExOAuth.sendRequest = function(method, url, headers, body, callback) {
       }
     }
   }
-  xhr.send(body);
+  /* older version of FX has to use sendAsBinary() to send binary data,
+   * hate this hack! */
+  if (body && body.sendAsBinary && xhr.sendAsBinary)
+    xhr.sendAsBinary(body.data);
+  else
+    xhr.send(body);
 };
 
 /**

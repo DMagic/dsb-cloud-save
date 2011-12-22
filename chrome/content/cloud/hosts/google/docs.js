@@ -1,8 +1,17 @@
 Hosts.gdocs = function uploadGDocs(req, callback){
 	
   getBuffer(req, function(file){
-    var builder = new BlobBuilder();
-    builder.append(file.abuf);
+    var builder;
+    if ('undefined' !== typeof BlobBuilder) {
+      builder = new BlobBuilder();
+      builder.append(file.abuf);
+      builder = builder.getBlob(file.type);
+    } else {
+      builder = {
+        data: file.data,
+        sendAsBinary: true
+      }
+    }
     
   
   function handleErrors(resp){
@@ -61,7 +70,7 @@ Hosts.gdocs = function uploadGDocs(req, callback){
       
       
       console.log('uploading new mime type', file.type);
-      var blob = builder.getBlob(file.type);
+      var length = builder.sendAsBinary ? builder.data.length : builder.size;
       
       GoogleOAUTH.sendSignedRequest(
         'https://docs.google.com/feeds/upload/create-session/default/private/full',
@@ -78,7 +87,10 @@ Hosts.gdocs = function uploadGDocs(req, callback){
 						xhr.onload = function(){
 							complete(xhr.responseText, xhr);
 						}
-						xhr.send(blob);
+            if (builder && builder.sendAsBinary && xhr.sendAsBinary)
+              xhr.sendAsBinary(builder.data);
+            else
+						  xhr.send(builder);
         	}else{
 	        	handleErrors(xhr.responseText)
         	}
@@ -89,7 +101,7 @@ Hosts.gdocs = function uploadGDocs(req, callback){
             'X-Upload-Content-Type': file.type,
             'Content-Type': file.type,
             'Slug': file.name,
-            'X-Upload-Content-Length': blob.size,
+            'X-Upload-Content-Length': length,
             'GData-Version': '3.0'
           },
           parameters: {

@@ -44,9 +44,17 @@ Hosts.sugarsync = function uploadsugarsync(req, callback){
 	
 	function upload(ref){
 		getBuffer(req, function(file){
-			var builder = new BlobBuilder();
-			builder.append(file.abuf);
-			var blob = builder.getBlob();
+			var builder;
+			if ('undefined' !== typeof BlobBuilder) {
+				builder = new BlobBuilder();
+				builder.append(file.abuf);
+				builder = builder.getBlob(file.type);
+			} else {
+				builder = {
+					data: file.data,
+					sendAsBinary: true
+				}
+			}
 			var xhr = new XMLHttpRequest();
 
 			xhr.open('PUT', ref+'/data', true);
@@ -60,7 +68,10 @@ Hosts.sugarsync = function uploadsugarsync(req, callback){
 				})
 			}
 
-			xhr.send(blob);
+			if (builder && builder.sendAsBinary && xhr.sendAsBinary)
+				xhr.sendAsBinary(builder.data);
+			else
+				xhr.send(builder);
 		});
 	}
 

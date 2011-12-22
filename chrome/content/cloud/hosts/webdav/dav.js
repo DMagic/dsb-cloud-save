@@ -16,15 +16,26 @@ Hosts.webdav = function uploadWebDAV(req, callback){
   var fs = new WebDAV.Fs(cloudSavePreference.getItem('webdav_url'));
   WebDAV.auth = cloudSavePreference.getItem('webdav_auth'); //this is a nasty hack
   getRaw(req, function(file){
-    var body = new BlobBuilder();
-    var bin = file.data, arr = new Uint8Array(bin.length);
-    for(var i = 0; i < bin.length; i++){
-      arr[i] = bin.charCodeAt(i);
+    var body, raw = file.data, len = raw.length;
+    if ('undefined' !== typeof BlobBuilder) {
+      var arr = new Uint8Array(len);
+      body = new BlobBuilder();
+      for (var i = 0; i < len; arr[i] = raw.charCodeAt(i++));
+      body.append(arr.buffer);
+      body = body.getBlob();
+    } else {
+      var data = '', i;
+      for (var i = 0; i < len; data += String.fromCharCode(raw.charCodeAt(i++) & 0xff));
+      body = {
+        data: data,
+        sendAsBinary: true
+      }
     }
-    body.append(arr.buffer);
-    fs.file("/"+file.name).write(body.getBlob(), function(body, xhr){
+
+    fs.file("/"+file.name).write(body, function(body, xhr){
       if(xhr.status >= 200 && xhr.status < 300){
-        callback("Yay I think this means it works");
+        callback({url: fs.rootUrl});
+        //callback("Yay I think this means it works");
       }else{
         callback("error:"+xhr.status+" "+xhr.statusText);
       }

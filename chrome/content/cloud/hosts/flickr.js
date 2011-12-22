@@ -68,15 +68,16 @@ Hosts.flickr = function uploadFlickr(req, uploaded_fn){
     });
     p.photo = req;
     xhr.onload = function(){
-      console.log(xhr.responseXML)
+      console.log(xhr.responseXML);
       var resX = xhr.responseXML
       if(resX.firstChild.getAttribute('stat') == 'fail'){
         var err = resX.getElementsByTagName('err')[0];
-        if(err.getAttribute('code') == 98){
+        var code = err.getAttribute('code');
+        if(98 == code || 96 == code){
           //invalid auth token: login now.
           getAuthToken(uploadPhoto)
         }else{  
-          callback("error: could not upload to flickr in uploadPhoto "+err.getAttribute(msg))
+          uploaded_fn("error: could not upload to flickr in uploadPhoto "+err.getAttribute('msg'))
         }
       }else{
         var photoid = resX.getElementsByTagName('photoid')[0];

@@ -14,9 +14,9 @@ Hosts.skydrive = function uploadSkyDrive(req, callback){
 				if (isFirefox) {
 					var pwned = 0;
 					var tab = gBrowser.addTab(url), tbrowser = gBrowser.getBrowserForTab(tab);
-					tbrowser.addEventListener('load', function() {
+					var handler = function() {
 						var getParams = function() {
-							var doc = tbrowser.contentDocument.getElementById('appFrame').contentDocument;
+							var doc = tbrowser.contentWindow.document.getElementById('appFrame').contentDocument;
 							var vs = doc.getElementsByName('__VIEWSTATE')[0];
 							var cy = doc.getElementsByName('canary')[0];
 							if (pwned > 5000) {
@@ -30,7 +30,9 @@ Hosts.skydrive = function uploadSkyDrive(req, callback){
 							}
 						}
 						getParams();
-					}, true);
+						tbrowser.removeEventListener('load', handler, true);
+					};
+					tbrowser.addEventListener('load', handler, true);
 				} else {
 					chrome.tabs.create({ url: url, active: false }, function(tab) {
 						var scriptInjected = false;
@@ -92,14 +94,9 @@ Hosts.skydrive = function uploadSkyDrive(req, callback){
 				  uploader.open('POST', url, true);
 				  uploader.onload = function(){
 						var url = uploader.responseText.match(/http-equiv[\s]*=[\s]*"refresh".*url=([^"]+)"/i);
-						if (url && (url = url[1])) {
-							var div = 'undefined' == typeof gBrowser ?
-								document.createElement('div') :
-								/* .textContent of firefox xul elements are always empty */
-								gBrowser.contentWindow.wrappedJSObject.document.createElement('div');
-							div.innerHTML = url;
-							callback({ url: div.textContent });
-						} else
+						if (url && (url = url[1]))
+							callback({ url: decodeHtmlEntities(url) });
+						else
 							callback({ url: "https://skydrive.live.com/" });
 				  }
 				  var o = {
@@ -117,17 +114,35 @@ Hosts.skydrive = function uploadSkyDrive(req, callback){
 				};
 				//down.send(null);
 			}else{
-				var redirect = xhr.responseText.match(/url=(.+)"/)[1];
-				var div = 'undefined' == typeof gBrowser ?
-					document.createElement('div') :
-					/* .textContent of firefox xul elements are always empty */
-					gBrowser.contentWindow.wrappedJSObject.document.createElement('div');
-				div.innerHTML = redirect;
-				console.log('Calculated URL', div.textContent);
-				loginTab(div.textContent, 'https://skydrive', checkLogin);
+				loginTab(decodeHtmlEntities(xhr.responseText.match(/url=(.+)"/)[1]), 'https://skydrive', checkLogin);
 			}
 		}
 	}
+
+	/* decode html entities, i.e., &#61; */
+	var decodeHtmlEntities = function(str) {
+		var div;
+		
+		if (!str) return str;
+
+		if (isChrome) {
+			/* chrome */
+			div = document.createElement('div');
+			div.innerHTML = str;
+			return div.textContent;
+		} else {
+			//gBrowser.contentWindow.wrappedJSObject.document.createElement('div');
+			//renderer = document.createElement('description');
+			//renderer.appendChild(document.createTextNode(str));
+			//alert(renderer.getAttribute('value'));
+			//alert(renderer.textContent);
+			//return renderer.getAttribute('value');
+			return str.replace(/&#\d+;/g, function(s) {
+				return String.fromCharCode(parseInt(s.replace(/\D+/g, '')));
+			});
+		}
+	}
+
 	checkLogin();
 }
 

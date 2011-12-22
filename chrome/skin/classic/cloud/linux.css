@@ -1,0 +1,30 @@
+/* fix the ugly black border around the tooltip on linux */
+#_dlbar_finTipContent,
+#_dlbar_progTipContent {
+	border-radius: 0;
+	-moz-border-radius: 0;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	margin: 0;
+	border: 3px solid #ccc;
+}
+
+#_dlbar_finTipMiddle,
+#_dlbar_progTipMiddle {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	border-radius: 0;
+	-moz-border-radius: 0;
+}
+
+.tt-header {
+	border-radius: 0;
+	-moz-border-radius: 0;
+}
+
+.tt-cloud-img {
+	margin: -5px 0 0 0;
+	width: 80px;
+	background: url(chrome://downbar/skin/tooltip-sprites.png) 0 -180px no-repeat;
+}
+

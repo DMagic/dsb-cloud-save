@@ -50,7 +50,11 @@ var WebDAV = {
       xhr.setRequestHeader(header, headers[header]);
     }
     xhr.setRequestHeader("Authorization", WebDAV.auth);
-    xhr.send(data);
+
+    if (data && data.sendAsBinary && xhr.sendAsBinary)
+      xhr.sendAsBinary(data.data);
+    else
+      xhr.send(data);
 
     if(!callback) {
       return body();
