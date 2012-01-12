@@ -100,6 +100,20 @@ if (isFirefox) {
 	}
 }
 
+/* incomplete authentication data may lead to authentication failure, this problem will persist
+even after re-installing the extension, the only solution is to clear locally stored data, this
+function is provided for each host to check it's local data */
+window.cloudSavePreference.unifyItems = function(keys) {
+	/* all values of specified keys must be either all-null or all-not-null */
+	for (var k in keys) {
+		if (null === window.cloudSavePreference.getItem(keys[k])) {
+			for (var k2 in keys)
+				window.cloudSavePreference.removeItem(keys[k2]);
+			break;
+		}
+	}
+}
+
 
 if (isChrome) {
 	/* Google Chrome */

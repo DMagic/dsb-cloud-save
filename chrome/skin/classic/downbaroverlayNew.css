@@ -366,6 +366,7 @@
 .em {
 	color: #005d8b;
 	font-weight: bold;
+	margin-left: -3px;
 }
 
 .row {

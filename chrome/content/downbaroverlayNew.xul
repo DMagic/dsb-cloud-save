@@ -181,7 +181,7 @@
                       <column/><column flex="1"/>
                       <rows>
                         <row class="row">
-                          <image id="_dlbar_progTipIcon" src=""/>
+                          <image id="_dlbar_progTipIcon" src="" style="height:32px;width:32px;margin-left:15px;"/>
                           <label id="_dlbar_progTipFileName" value="" class="db_tootipTitle"/>
                         </row>
                         <row class="row">
@@ -301,7 +301,7 @@
                         <column/><column flex="1"/>
                         <rows>
                           <row class="row">
-                            <image id="_dlbar_finTipIcon" src=""/>
+                            <image id="_dlbar_finTipIcon" src="" style="height:32px;width:32px;margin-left:15px;"/>
                             <label id="_dlbar_finTipFileName" value="" class="db_tootipTitle"/>
                           </row>
                           <row class="row">

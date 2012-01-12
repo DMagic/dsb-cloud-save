@@ -204,6 +204,35 @@ function _dlbar_init() {
 		}
 	}, false);
 
+	/* doesn't show popup till user clicks on it */
+	var hostPopup = document.getElementById('_dlbar_ttCloudHostContainer'),
+		hostSelect = document.getElementById('_dlbar_ttCloudHost');
+
+	hostSelect.addEventListener('click', function(e) {
+		hostPopup.allowPopup = true;
+		hostPopup.openPopup(hostPopup, 'end_before');
+		/* stop event propagation, otherwise the popup will be dismissed by click event handler of tooltip content */
+		e.stopPropagation();
+	}, false);
+	hostPopup.addEventListener('popupshowing', function(e) {
+		if (hostPopup.allowPopup) {
+			hostPopup.allowPopup = false;
+		} else {
+			e.stopPropagation();
+			e.preventDefault();
+		}
+	}, false);
+
+	/* stop event propagation if the event is originated from here, because some upper level elements
+	are also listen to this event and they don't do strict test on the event target */
+	hostPopup.addEventListener('popuphiding', function(e) {
+		if (e.target == hostPopup) {
+			e.stopPropagation();
+		}
+	}, false);
+	/* the popup will not be dismissed if we click on the tooltip body, it's annoying */
+	document.getElementById("_dlbar_progTipContent").addEventListener('click', function() { hostPopup.hidePopup() }, false);
+	document.getElementById("_dlbar_finTipContent").addEventListener('click', function() { hostPopup.hidePopup() }, false);
 
 	window.removeEventListener("load", _dlbar_init, true);
 }
@@ -1656,6 +1685,8 @@ function _dlbar_redirectTooltip(origElem, popupElem) {
 }
 
 function _dlbar_hideRedirPopup(aEvent) {
+	/* do not hide popup on mouseout events */
+	return;
 	
 	//d("in hideRedir");
 	//d("tooltipanchor " + _dlbar_currTooltipAnchor.id);
@@ -1753,6 +1784,8 @@ function _dlbar_hideRedirPopup(aEvent) {
 }
 
 function _dlbar_mouseOutPopup(aEvent) {
+	/* do not hide popup on mouseout events */
+	return;
 
 	// need to close the popup if the mouse goes outside the popup
 

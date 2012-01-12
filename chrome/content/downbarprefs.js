@@ -68,9 +68,10 @@ function init() {
 	var tab = /^#(.+)$/.exec(location.hash);
 	if (tab && (tab = tab[1]) &&
 		(tab = document.getElementById(tab)) &&
-		/tabpanel/i.test(tab.nodeName))
+		/tabpanel/i.test(tab.nodeName)) {
 		tab.parentNode.selectedPanel = tab;
-	tab.parentNode.parentNode.selectedIndex = tab.parentNode.selectedIndex;
+		tab.parentNode.parentNode.selectedIndex = tab.parentNode.selectedIndex;
+	}
 
 	/* save local file to cloud */
 	var csp = new DsbCSProvider({

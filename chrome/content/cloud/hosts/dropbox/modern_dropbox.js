@@ -13,6 +13,9 @@ var ModernDropbox = function(consumerKey, consumerSecret) {
 	var _dropboxApiVersion = 0;
 	var _xhr = new XMLHttpRequest();
 	
+	/* make sure local storage is not corrupted */
+	cloudSavePreference.unifyItems([_storagePrefix + "requestToken", _storagePrefix + "requestTokenSecret", _storagePrefix + "accessToken", _storagePrefix + "accessTokenSecret"]);
+	
 	var _ajaxSendFileContents = function(message, filename, content, callback) {
 		_xhr.open("POST", message.action, true);
 		

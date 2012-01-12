@@ -15,6 +15,7 @@ if ('undefined' === typeof DsbCSProvider) {
 		populate: function(showAdditional) {
 			var i, elem, ctx, host, hosts = this.hostContainer;
 			var browser = this.browser;
+			var stub, hbox, image, label, src;
 
 			if ('undefined' === typeof showAdditional) {
 				showAdditional = 'yes' === pref.getCharPref('downbar.cloud.hosts.additional');
@@ -25,23 +26,49 @@ if ('undefined' === typeof DsbCSProvider) {
 				elem = hosts.getElementsByClassName('additional');
 				for (i = 0; i < elem.length; elem[i++].hidden = !showAdditional);
 			} else {
+				/* menuitem stub */
+				stub = document.createElement('menuitem');
+				hbox = document.createElement('hbox');
+				image = document.createElement('image');
+				label = document.createElement('label');
+				hbox.setAttribute('class', 'item-box');
+				hbox.setAttribute('align', 'center');
+				image.setAttribute('class', 'item-image');
+				label.setAttribute('class', 'item-label');
+				stub.appendChild(hbox);
+				hbox.appendChild(image);
+				hbox.appendChild(label);
+
 				/* construct hosts */
 				for (ctx in browser.original)
 					/* ignore link type hosts (just dropdo) as they only save remote files */
 					if ('link' !== ctx)
 						for (host in browser.original[ctx]) {
-							elem = document.createElement('menuitem');
+							src = 'chrome://downbar/skin/cloud/icon/' + host + '.png';
+							elem = stub.cloneNode(true);
+							image = elem.getElementsByClassName('item-image')[0];
+							label = elem.getElementsByClassName('item-label')[0];;
+							image.setAttribute('src', src);
+							label.setAttribute('value', browser.original[ctx][host]);
 							elem.setAttribute('label', browser.original[ctx][host]);
 							elem.setAttribute('value', host);
+							elem.setAttribute('class', 'menuitem-iconic');
+							elem.setAttribute('src', src);
 							elem.context = ctx;
 							hosts.appendChild(elem);
 						}
 				for (ctx in browser.additional)
 					for (host in browser.additional[ctx]) {
-						elem = document.createElement('menuitem');
+						src = 'chrome://downbar/skin/cloud/icon/' + host + '.png';
+						elem = stub.cloneNode(true);
+						image = elem.getElementsByClassName('item-image')[0];
+						label = elem.getElementsByClassName('item-label')[0];;
+						image.setAttribute('src', src);
+						label.setAttribute('value', browser.additional[ctx][host]);
 						elem.setAttribute('label', browser.additional[ctx][host]);
 						elem.setAttribute('value', host);
-						elem.setAttribute('class', 'additional');
+						elem.setAttribute('class', 'additional menuitem-iconic');
+						elem.setAttribute('src', src);
 						elem.context = ctx;
 						elem.hidden = !showAdditional;
 						hosts.appendChild(elem);
