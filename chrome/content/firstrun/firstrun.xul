@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+
+<!-- Copyright 2011 Enzymatic Software, LLC.  All Rights Reserved. -->
+
+<?xml-stylesheet href="images/styles.css"?>
+<!DOCTYPE window SYSTEM "chrome://downbar/locale/downbarAboutText.dtd">
+
+<window id="firstrun"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	title="&aboutTitle.label;">
+<head>
+	<title>&aboutTitle.label;</title>
+
+	<script src="jquery.js" type="text/javascript"></script>
+	<script src="jquery.iphone-switch.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(window).load(function() {
+			var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+			var prefKey = 'downbar.function.cloud';
+
+			$('#switch-btn').iphoneSwitch(pref.getBoolPref(prefKey) ? "on" : "off", function() {
+				/* turn cloud save on */
+				pref.setBoolPref(prefKey, true);
+			}, function() {
+				/* turn cloud save off */
+				pref.setBoolPref(prefKey, false);
+			},
+			{
+				switch_on_container_path: 'images/iphone_switch_container_off.png',
+				switch_off_container_path: 'images/iphone_switch_container_off.png',
+				switch_path: 'images/iphone_switch.png'
+			});
+
+			$('#open-options').click(function() {
+				window.open('chrome://downbar/content/downbarprefs.xul', 'downbar_prefs', 'chrome');
+			});
+
+			/* set version */
+			try {
+				/* Firefox 3.6 and older */
+				var mgr = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+				$("#version").text(mgr.getItemForID("{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}").version);
+			}
+			catch(e) {
+				/* Firefox 4.0 and newer */
+				Components.utils.import("resource://gre/modules/AddonManager.jsm");
+				AddonManager.getAddonByID("{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}", function(addon) {
+					$("#version").text(addon.version);
+				});
+			}
+		});
+
+		/* adjust the width of recommendation iframe, don't know why this can't be done by addEventListener yet */
+		var adjustRecommend = function(ifm) {
+			var inner, content;
+			/* inner iframe width */
+			inner = ifm.contentDocument.getElementsByTagName('iframe')[0];
+			content = inner.contentDocument.getElementsByClassName('content')[0];
+			ifm.setAttribute('width', content.scrollWidth || inner.scrollWidth);
+		}
+	</script>
+</head>
+<body>
+<section id="wrapper">
+	<header>
+		<div class="logo">
+			<h1>
+				<a href="https://addons.mozilla.org/addon/download-statusbar/">
+					<img src="images/logo.gif" alt="Download Statusbar"/>
+				</a>
+			</h1>
+			<p>&version.label; <span id="version"></span></p>
+		</div>
+
+		<div class="options">
+			<p><a id="open-options" href="###">&openPref.label;</a></p>
+		</div>
+
+		<nav>
+			<ul>
+				<li><a href="#intro">&introTab.label;</a></li>
+				<li><a href="#hints">&hintsTab.label;</a></li>
+				<li class="nodivider"><a href="#help">&prefsTab.label;</a></li>
+			</ul>
+			<div class="recommend">
+				<iframe id="recommend-ifm" src="http://enzysoft.com/downbarWelcomeCenter.html" type="content"
+						frameborder="0" marginheight="0" marginwidth="0" width="0" onload="adjustRecommend(this)">
+				</iframe>
+			</div>
+		</nav>
+	</header>
+
+	<section id="content">
+		<section id="leftpanel">
+			<article class="welcome">
+				<div class="bookmarks"><a href="http://psdslicer.com/projects/2012/jan/12-dsb/#"><img src="images/icon_likeus.gif" alt="Bookmarks"/></a></div>
+
+				<div class="video"><iframe width="503" height="283" src="http://www.youtube.com/embed/qT2E6iIxi0g" frameborder="0" allowfullscreen="true"></iframe></div>
+
+				<a name="intro"><h3>&tagLine.label;</h3></a>
+				<p>&ifNew.label; &toView.label; &pressAbout.label;</p>
+			</article>
+
+			<div class="tips">
+				<a name="hints"><h2>&hintsTab.label;</h2></a>
+				<article>
+					<h4>&tip1Title.label;</h4>
+					<p>&tip1.label;</p>
+
+					<h4>&tip2Title.label;</h4>
+					<p>&tip2.label;</p>
+					<p>
+						<ul>
+							<li>&tip2a.label;</li>
+							<li>&tip2b.label;</li>
+							<li>&tip2c.label;</li>
+							<li>&tip2d.label;</li>
+					    	<li>&tip2e.label;</li>
+					    	<li>&tip2f.label;</li>
+					    </ul>
+					</p>
+
+				    <h4>&tip3Title.label;</h4>
+				    <p>&tip3.label;</p>
+
+				    <h4>&tip4Title.label;</h4>
+				    <p>&tip4.label;</p>
+
+				    <!--h4>&tip5Title.label;</h4>
+				    <p>&tip5.label;</p-->
+
+				    <h4>&tip6Title.label;</h4>
+				    <p>&tip6.label;</p>
+
+				    <h4>&tip7Title.label;</h4>
+				    <p>&tip7.label;</p>
+				</article>
+			</div>
+
+			<div class="tips">
+				<a name="help"><h2>&prefsTab.label;</h2></a>
+				<article>
+					<h4>&general.label;</h4>
+					<p><em>&pref1Title.label;</em> &pref1.label;</p>
+					<p><em>&pref2Title.label;</em> &pref2.label;</p>
+					<p><em>&pref3Title.label;</em> &pref3.label;</p>
+					<p><em>&pref4Title.label;</em> &pref4.label;</p>
+					<p><em>&pref5Title.label;</em> &pref5.label;</p>
+					<p><em>&pref6Title.label;</em> &pref6.label;</p>
+					<p><em>&pref7Title.label;</em> &pref7.label;</p>
+					<p><em>&pref8Title.label;</em> &pref8.label;</p>
+					<p><em>&pref9Title.label;</em> &pref9.label;</p>
+					<p><em>&pref10Title.label;</em> &pref10.label;</p>
+					<p><em>&pref11Title.label;</em> &pref11.label;</p>
+					<p><em>&pref12Title.label;</em> &pref12.label;</p>
+					<p><em>&pref13Title.label;</em> &pref13.label;</p>
+					
+					<h4>&appearance.label;</h4>
+					<p><em>&pref14Title.label;</em> &pref14.label;</p>
+					<p><em>&pref15Title.label;</em> &pref15.label;</p>
+					<p><em>&pref16Title.label;</em> &pref16.label;</p>
+					<p><em>&pref17Title.label;</em> &pref17.label;</p>
+					<p><em>&pref18Title.label;</em> &pref18.label;</p>
+					<p><em>&pref19Title.label;</em> &pref19.label;</p>
+					
+					<h4>&virusScan.label;</h4>
+					<p><em>&pref20Title.label;</em> &pref20.label;</p>
+					<p><em>&pref21Title.label;</em> &pref21.label;</p>
+					<p><em>&pref22Title.label;</em> &pref22.label;</p>
+					<p><em>&pref23Title.label;</em> &pref23.label;</p>
+		    	</article>
+			</div>
+		</section>
+
+		<section id="rightpanel">
+			<aside class="cloudsave">
+				<h2><img src="images/heading_cloudsave.png" alt="CloudSave"/></h2>
+				<div class="switch">
+					<div class="left" id="switch-btn" style="cursor: pointer; ">
+						<div class="iphone_switch_container" style="height:54px; width:188px; position: relative; z-index:150; overflow: hidden">
+							<img class="iphone_switch" style="position: relative; z-index: 160; height: 54px; width: 188px; background-image: url(images/iphone_switch.png); background-position: -107px 50%; " src="images/iphone_switch_container_off.png"/>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<p><a href="###">What is this?</a></p>
+			</aside>
+		
+			<aside class="howitwork">
+				<h2>How it works</h2>
+				<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, </p>
+			</aside>
+		</section>
+	</section>
+	<footer></footer>
+</section>
+</body>
+</window>

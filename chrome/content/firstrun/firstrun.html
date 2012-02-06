@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Download Statusbar Landing Page</title>
+		<link href="images/styles.css" rel="stylesheet" type="text/css">
+		<script src="jquery.js" type="text/javascript"></script>
+		<script src="jquery.iphone-switch.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		$(window).load(function() {
+			var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+			var prefKey = 'downbar.function.cloud';
+
+			$('#switch-btn').iphoneSwitch(pref.getBoolPref(prefKey) ? "on" : "off", function() {
+				/* turn cloud save on */
+				pref.setBoolPref(prefKey, true);
+			}, function() {
+				/* turn cloud save off */
+				pref.setBoolPref(prefKey, false);
+			},
+			{
+				switch_on_container_path: 'images/iphone_switch_container_off.png',
+				switch_off_container_path: 'images/iphone_switch_container_off.png',
+				switch_path: 'images/iphone_switch.png'
+			});
+
+			$('#open-options').click(function() {
+				window.open('chrome://downbar/content/downbarprefs.xul', 'downbar_prefs', 'chrome');
+			});
+		});
+		</script>
+	</head>
+<body>
+<section id="wrapper">
+	<header>
+		<div class="logo">
+			<h1>
+				<a href="https://addons.mozilla.org/addon/download-statusbar/">
+					<img src="images/logo.gif" alt="Download Statusbar">
+				</a>
+			</h1>
+			<p>Version 0.9.10</p>
+		</div>
+
+		<div class="options">
+			<p><a id="open-options" href="###">Open Extensions Options</a></p>
+		</div>
+
+		<nav>
+			<ul>
+				<li><a href="###">INTRODUCTION</a></li>
+				<li><a href="###">HINTS AND TIPS</a></li>
+				<li class="nodivider"><a href="###">OPTIONS HELP</a></li>
+			</ul>
+			<div class="recommend">We recommend: <a href="###">Driver Whiz to Update your Drivers</a></div>
+		</nav>
+	</header>
+
+	<section id="content">
+		<section id="leftpanel">
+			<article class="welcome">
+				<div class="bookmarks"><a href="http://psdslicer.com/projects/2012/jan/12-dsb/#"><img src="images/icon_likeus.gif" alt="Bookmarks"></a></div>
+
+				<div class="video"><iframe width="503" height="283" src="http://www.youtube.com/embed/qT2E6iIxi0g" frameborder="0" allowfullscreen></iframe></div>
+
+				<h3>This browser extension allows you to view and manage downloads from a tidy statusbar.</h3>
+				<p>If you are new to Download Statusbar, please keep reading for information on how to use this extension. To view this help screen again in the future, you will need to go to the Download Statusbar options, and press the 'About' button.</p>
+			</article>
+
+			<div class="tips">
+				<h2>Hints and Tips</h2>
+				<article>
+					<h4><a href="http://psdslicer.com/projects/2012/jan/12-dsb/#">Temporary Viewing Location</a></h4>
+					<p>&tip1.label;</p>
+				</article>
+			
+				<article>
+					<h4><a href="http://psdslicer.com/projects/2012/jan/12-dsb/#">Shortcuts for Common Actions</a></h4>
+					<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem.</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="rightpanel">
+			<aside class="cloudsave">
+				<h2><img src="images/heading_cloudsave.png" alt="CloudSave"></h2>
+				<div class="switch">
+					<div class="left" id="switch-btn" style="cursor: pointer; ">
+						<div class="iphone_switch_container" style="height:54px; width:188px; position: relative; z-index:150; overflow: hidden">
+							<img class="iphone_switch" style="position: relative; z-index: 160; height: 54px; width: 188px; background-image: url(images/iphone_switch.png); background-position: -107px 50%; " src="images/iphone_switch_container_off.png">
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<p><a href="http://psdslicer.com/projects/2012/jan/12-dsb/#">What is this?</a></p>
+			</aside>
+		
+			<aside class="howitwork">
+				<h2>How it works</h2>
+				<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, </p>
+			</aside>
+		</section>
+	</section>
+	<footer></footer>
+</section>
+</body>
+</html>
