@@ -113,7 +113,7 @@ function _dlbar_init() {
 		    	
 		    	var content = win.document.getElementById("content");
 		    	//content.selectedTab = content.addTab("chrome://downbar/content/aboutdownbar.xul");
-	    		content.selectedTab = content.addTab("chrome://downbar/content/firstrun/firstrun.html");
+	    		content.selectedTab = content.addTab("chrome://downbar/content/firstrun/firstrun.xul");
 		    }, 1250);
 			
 			_dlbar_pref.setCharPref("downbar.function.version", currVersion);

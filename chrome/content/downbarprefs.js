@@ -603,7 +603,7 @@ function openAboutWindow() {
     var wmed = wm.QueryInterface(Components.interfaces.nsIWindowMediator);
     
     var win = wmed.getMostRecentWindow("navigator:browser");
-    var url = 'chrome://downbar/content/firstrun/firstrun.html';
+    var url = 'chrome://downbar/content/firstrun/firstrun.xul';
     if (!win)
     	win = window.openDialog("chrome://browser/content/browser.xul", "_blank", "chrome,all,dialog=no", url, null, null);
     else {
