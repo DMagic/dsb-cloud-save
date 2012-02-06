@@ -1,5 +1,6 @@
 var Hosts = {};
 
+var applicationName = 'Download Statusbar';
 var isFirefox = 'undefined' == typeof chrome;
 var isChrome = !isFirefox;
 

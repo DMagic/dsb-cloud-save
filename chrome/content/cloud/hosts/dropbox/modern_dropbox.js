@@ -10,7 +10,8 @@ var ModernDropbox = function(consumerKey, consumerSecret) {
 	var _authCallback = "http://drag2up.appspot.com/static/tpilb.html";
 	var _fileListLimit = 10000;
 	var _cookieTimeOut = 3650;
-	var _dropboxApiVersion = 0;
+	//var _dropboxApiVersion = 0;
+	var _dropboxApiVersion = 1;
 	var _xhr = new XMLHttpRequest();
 	
 	/* make sure local storage is not corrupted */
@@ -96,7 +97,8 @@ var ModernDropbox = function(consumerKey, consumerSecret) {
 			method: "GET",
 		    parameters: [
 		      	["oauth_consumer_key", _consumerKey],
-		      	["oauth_signature_method", "HMAC-SHA1"]
+//		      	["oauth_signature_method", "HMAC-SHA1"]
+		      	["oauth_signature_method", "PLAINTEXT"]
 		  	]
 		};
 		

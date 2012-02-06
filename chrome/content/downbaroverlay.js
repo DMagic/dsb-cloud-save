@@ -114,7 +114,8 @@ function _dlbar_init() {
 	    	var win = wmed.getMostRecentWindow("navigator:browser");
 	    	
 	    	var content = win.document.getElementById("content");
-	    	content.selectedTab = content.addTab("chrome://downbar/content/aboutdownbar.xul");	
+	    	//content.selectedTab = content.addTab("chrome://downbar/content/aboutdownbar.xul");
+	    	content.selectedTab = content.addTab("chrome://downbar/content/firstrun/firstrun.html");
 	    }, 1250);
 		
 		_dlbar_pref.setCharPref("downbar.function.version", currVersion);
@@ -188,27 +189,14 @@ function _dlbar_init() {
 	});
 	csp.populate();
 
-	document.getElementById('_dlbar_ttCloudHost').addEventListener('command', function(e) {
-		var el, pel = document.getElementById('_dlbar_ttHeader').parentNode;
-		if (/^_dlbar_fin/.test(pel.id)) {
-			/* finished download */
-			el = document.getElementById('_dlbar_finTipTarget');
-			csp.save([el.value.replace(/(^\s+|\s+$)/g, '')], true);
-		} else {
-			/* start upload after download complete */
-			el = document.getElementById('_dlbar_progTipTarget');
-			_dlbar_cloudsaveQueue[el.value.replace(/(^\s+|\s+$)/g, '')] = csp;
-			/* tell the user what's happening */
-			pel.getElementsByClassName('tt-cloud-descr')[0].setAttribute('value',
-				'Upload will start after download completes');
-		}
-	}, false);
-
 	/* doesn't show popup till user clicks on it */
 	var hostPopup = document.getElementById('_dlbar_ttCloudHostContainer'),
-		hostSelect = document.getElementById('_dlbar_ttCloudHost');
+		hostSelect = document.getElementById('_dlbar_ttCloudHost'),
+		cloudPrefKey = 'downbar.function.cloud';
 
 	hostSelect.addEventListener('click', function(e) {
+		if (!_dlbar_pref.getBoolPref(cloudPrefKey)) return;
+
 		hostPopup.allowPopup = true;
 		hostPopup.openPopup(hostPopup, 'end_before');
 		/* stop event propagation, otherwise the popup will be dismissed by click event handler of tooltip content */
@@ -233,6 +221,87 @@ function _dlbar_init() {
 	/* the popup will not be dismissed if we click on the tooltip body, it's annoying */
 	document.getElementById("_dlbar_progTipContent").addEventListener('click', function() { hostPopup.hidePopup() }, false);
 	document.getElementById("_dlbar_finTipContent").addEventListener('click', function() { hostPopup.hidePopup() }, false);
+
+	hostSelect.addEventListener('command', function(e) {
+		var el, pel = document.getElementById('_dlbar_ttHeader').parentNode;
+		if (/^_dlbar_fin/.test(pel.id)) {
+			/* finished download */
+			el = document.getElementById('_dlbar_finTipTarget');
+			csp.save([el.value.replace(/(^\s+|\s+$)/g, '')], true);
+		} else {
+			/* start upload after download complete */
+			el = document.getElementById('_dlbar_progTipTarget');
+			_dlbar_cloudsaveQueue[el.value.replace(/(^\s+|\s+$)/g, '')] = csp;
+			/* tell the user what's happening */
+			pel.getElementsByClassName('tt-cloud-descr')[0].setAttribute('value',
+				'Upload will start after download completes');
+		}
+	}, false);
+
+	var jqCloudContainer = $('#_dlbar_ttCloudContainer');
+	var jqCloudSwitch = $('#_dlbar_ttCloudSwitch');
+	var jqCloudSwitchContainer = $('#_dlbar_ttCloudSwitchContainer');
+	var jqCloudImage = $('#_dlbar_ttCloudImg');
+	/* observe preference change to enable/disable cloud features */
+	var prefService = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
+	/* need to keep this reference so that GC will not collect this observer, see this:
+	https://developer.mozilla.org/en/Code_snippets/Preferences */
+	_dlbar_init.prefBranch = prefService.getBranch('downbar.function.');
+	_dlbar_init.prefBranch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+	_dlbar_init.prefBranch.addObserver('', {
+		observe: function(subject, topic, data) {
+			if ('nsPref:changed' == topic && 'cloud' == data) {
+				var status = _dlbar_pref.getBoolPref(cloudPrefKey);
+				jqCloudSwitch.toggleStatus(status);
+				if (status) {
+					hostSelect.disabled = false;
+					jqCloudContainer.removeClass('off').addClass('on');
+				} else {
+					hostSelect.disabled = true;
+					jqCloudContainer.removeClass('on').addClass('off');
+				}
+			}
+		}
+	}, false);
+	if (!_dlbar_pref.getBoolPref(cloudPrefKey)) {
+		hostSelect.disabled = true;
+		jqCloudContainer.removeClass('on').addClass('off');
+	} else {
+		hostSelect.disabled = false;
+		jqCloudContainer.removeClass('off').addClass('on');
+	}
+	
+	/* cloud switch click event handler */
+	jqCloudSwitch.click(function() {
+		_dlbar_pref.setBoolPref(cloudPrefKey, !_dlbar_pref.getBoolPref(cloudPrefKey));
+	});
+
+	/* cloud switch status change animation */
+	jqCloudSwitch.toggleStatus = function(status) {
+		if (status) {
+			/* turn on */
+			/*jqCloudImage.animate({ marginTop: -23, marginLeft: -8 }, 'slow', function() {
+				jqCloudImage.removeClass('off').addClass('on');
+			});
+			jqCloudSwitchContainer.animate({ marginTop: -17 }, 'slow', function() {
+				jqCloudSwitchContainer.removeClass('off').addClass('on');
+			});*/
+			jqCloudSwitch.animate({ backgroundPosition: 0 }, 'slow', function() {
+				jqCloudSwitch.removeClass('off').addClass('on');
+			});
+		} else {
+			/* turn off */
+			/*jqCloudImage.animate({ marginTop: -53, marginLeft: -28 }, 'slow', function() {
+				jqCloudImage.removeClass('on').addClass('off');
+			});
+			jqCloudSwitchContainer.animate({ marginTop: -8 }, 'slow', function() {
+				jqCloudSwitchContainer.removeClass('on').addClass('off');
+			});*/
+			jqCloudSwitch.animate({ backgroundPosition: -42 }, 'slow', function() {
+				jqCloudSwitch.removeClass('on').addClass('off');
+			});
+		}
+	}
 
 	window.removeEventListener("load", _dlbar_init, true);
 }
@@ -888,9 +957,17 @@ function _dlbar_finishShow(idtoshow, completed) {
 
 // This is needed to do timeouts in multiple browser windows from the downbar.js component, (enumerating each window and calling timeout doesn't work)
 function _dlbar_startAutoClear(idtoclear, timeout) {
-
-	window.setTimeout(function(){_dlbar_animateDecide(idtoclear, "clear", {shiftKey:false});}, timeout)
-
+	window.setTimeout(function delayClear() {
+		/* do not delete node if the tooltip if showing */
+		var tooltip = document.getElementById('_dlbar_finTip'),
+			state = tooltip.state,
+			anchor = tooltip.anchorNode;
+		if ('closed' != state && idtoclear == anchor.id) {
+			setTimeout(function() { delayClear() }, 1000);
+			return;
+		}
+		_dlbar_animateDecide(idtoclear, "clear", { shiftKey: false });
+	}, timeout);
 }
 
 function _dlbar_animateDecide(elemid, doWhenDone, event) {
@@ -1643,7 +1720,7 @@ function _dlbar_closeFinTip() {
 
 // Intercept the tooltip and show my fancy tooltip (placed at the correct corner) instead
 function _dlbar_redirectTooltip(origElem, popupElem) {
-	
+
 	if(origElem == null)
 		var popupAnchor = popupElem.triggerNode;  // popup.triggerNode was introduced in Firefox 4.0beta4 (per popup) - replaces document.popupNode (per document)
 	else
@@ -1653,7 +1730,7 @@ function _dlbar_redirectTooltip(origElem, popupElem) {
     while(!popupAnchor.id) {
 		popupAnchor = popupAnchor.parentNode;
 	}
-	
+
 	// holds a ref to this anchor node so we can remove the onmouseout later
     _dlbar_currTooltipAnchor = popupAnchor;
 
@@ -1662,16 +1739,20 @@ function _dlbar_redirectTooltip(origElem, popupElem) {
 	var cloudHeader = document.getElementById('_dlbar_ttHeader');
 	var cloudDescr = cloudHeader.getElementsByClassName('tt-cloud-descr')[0];
 	var tooltipBody;
+	var finTip = document.getElementById("_dlbar_finTip");
+	var progTip = document.getElementById("_dlbar_progTip");
 	cloudHeader.hidden = false;
-	if (dlstate == 1 | dlstate == 2 | dlstate == 3 | dlstate == 6 | dlstate == 7| dlstate == 8) {
+	if (dlstate == 1 || dlstate == 2 || dlstate == 3 || dlstate == 6 || dlstate == 7 || dlstate == 8) {
 		tooltipBody = document.getElementById("_dlbar_finTipContent");
 		tooltipBody.insertBefore(cloudHeader, tooltipBody.firstChild);
 		cloudDescr.setAttribute('value', cloudDescr.getAttribute('default'));
-		document.getElementById("_dlbar_finTip").showPopup(popupAnchor,  -1, -1, 'popup', 'topleft' , 'bottomleft');
-	} else if (dlstate == 0 | dlstate == 4 | dlstate == 5) {
+		progTip.hidePopup();
+		finTip.showPopup(popupAnchor,  -1, -1, 'popup', 'topleft' , 'bottomleft');
+	} else if (dlstate == 0 || dlstate == 4 || dlstate == 5) {
 		tooltipBody = document.getElementById("_dlbar_progTipContent");
 		tooltipBody.insertBefore(cloudHeader, tooltipBody.firstChild);
-		document.getElementById("_dlbar_progTip").showPopup(popupAnchor,  -1, -1, 'popup', 'topleft' , 'bottomleft');
+		finTip.hidePopup();
+		progTip.showPopup(popupAnchor,  -1, -1, 'popup', 'topleft' , 'bottomleft');
 	}
     
     // xxx In linux, a mouseout event is sent right away and the popup never shows, delay to avoid that
@@ -1679,7 +1760,7 @@ function _dlbar_redirectTooltip(origElem, popupElem) {
     window.setTimeout(function(){
     	popupAnchor.setAttribute("onmouseout", "_dlbar_hideRedirPopup(event);");
     }, 50);
-	
+
     return false;  // don't show the default tooltip
 
 }
@@ -1849,7 +1930,6 @@ function _dlbar_mouseOutPopup(aEvent) {
 				/^menu/i.test(relTarget.nodeName) && /^_dlbar_tt/.test(relTarget.parentNode.id)) {
 			return;
 		}
-			
 	} catch(e) {
 		if (!relTarget) {
 			relTarget = aEvent.originalTarget;
@@ -2161,7 +2241,6 @@ function _dlbar_checkMiniMode() {
 
 			downbarHolder.hidden = true;
 			document.getElementById("downbarMini").collapsed = false;
-
 		}
 		document.getElementById("_dlbar_changeModeContext").label = _dlbar_strings.getString("toFullMode");
 		document.getElementById("_dlbar_changeModeContext2").label = _dlbar_strings.getString("toFullMode");

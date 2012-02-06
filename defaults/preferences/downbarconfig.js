@@ -90,5 +90,6 @@ pref("downbar.function.undoClearKey", "VK_INSERT");
 pref("downbar.integration.enableDTA", true);
 
 /* cloud save preferences */
+pref("downbar.function.cloud", false);
 pref("downbar.cloud.localSave", "ask");
 pref("downbar.cloud.hosts.additional", "yes");

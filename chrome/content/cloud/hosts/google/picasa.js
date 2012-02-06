@@ -9,7 +9,7 @@ var GoogleOAUTH = ChromeExOAuth.initBackgroundPage({
   'consumer_key' : 'anonymous',
   'consumer_secret' : 'anonymous',
   'scope' : 'https://docs.google.com/feeds/ https://picasaweb.google.com/data/',
-  'app_name' : 'cloudsave'
+  'app_name' : applicationName
 });
 
 
@@ -62,8 +62,8 @@ Hosts.picasa = function uploadPicasa(req, callback){
           body: "<entry xmlns='http://www.w3.org/2005/Atom' \
 xmlns:media='http://search.yahoo.com/mrss/'\
     xmlns:gphoto='http://schemas.google.com/photos/2007'>\
-  <title type='text'>cloudsave</title>\
-  <summary type='text'>Files uploaded with cloudsave.</summary>\
+  <title type='text'>" + applicationName + "</title>\
+  <summary type='text'>Files uploaded with " + applicationName + ".</summary>\
   <category scheme='http://schemas.google.com/g/2005#kind'\
     term='http://schemas.google.com/photos/2007#album'></category>\
 </entry>"
@@ -110,7 +110,7 @@ xmlns:media='http://search.yahoo.com/mrss/'\
           var albumId;
           for(var index = 0; index < jsonData.feed.entry.length; index++){
             var entryData = jsonData.feed.entry[index];
-            if(/cloudsave/.test(entryData.title['$t'])){
+            if((new RegExp(applicationName)).test(entryData.title['$t'])){
               albumId = entryData['gphoto$id']['$t']
               console.log('found a cloudsave album');
             }

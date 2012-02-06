@@ -5,6 +5,6 @@ var GoogleOAUTH = ChromeExOAuth.initBackgroundPage({
   'consumer_key' : 'anonymous',
   'consumer_secret' : 'anonymous',
   'scope' : 'https://docs.google.com/feeds/ https://picasaweb.google.com/data/',
-  'app_name' : 'cloudsave'
+  'app_name' : applicationName
 });
 

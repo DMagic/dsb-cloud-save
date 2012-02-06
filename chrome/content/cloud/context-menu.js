@@ -17,6 +17,16 @@
 		/* only trigger when the popup menu is the root context menu */
 		if ('contentAreaContextMenu' !== e.target.getAttribute('id')) return;
 
+		/* only show menu item when cloud feature is enabled */
+		var root = $('#dsbCmRoot');
+
+		if (!pref.getBoolPref('downbar.function.cloud')) {
+			root.attr('hidden', true);
+			return;
+		} else {
+			root.attr('hidden', false);
+		}
+
 		var el = document.popupNode, imgEl, linkEl;
 
 		/* mimic Chrome OnClickData */

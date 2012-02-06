@@ -4,6 +4,7 @@ Hosts.droplr = function uploaddroplr(file, callback) {
     console.log(msg);
     callback('error: Upload failed');
   }
+  /* droplr gives error message in response headers */
   var geterrmsg = function(xhr) {
     return xhr.getResponseHeader('x-droplr-errordetails') || xhr.getResponseHeader('x-droplr-errorcode');
   }
@@ -15,12 +16,6 @@ Hosts.droplr = function uploaddroplr(file, callback) {
   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   xhr.onerror = onerror;
   xhr.onload = function() {
-    /* droplr gives error message in response headers */
-    if (error = geterrmsg(xhr)) {
-      callback('error:' + error);
-      return;
-    }
-
     if (200 != xhr.status) {
       /* not logged in */
       loginTab('https://droplr.com/login', /^https:\/\/droplr.com\/?$/, function() {

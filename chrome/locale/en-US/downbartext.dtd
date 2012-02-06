@@ -42,6 +42,7 @@
 <!ENTITY  mini.label  "Mini">
 <!ENTITY  full.label  "Full Mode">
 <!ENTITY  tooltipCloudDescr.label "Dropbox, Amazon Cloud, Box.net, and more.">
+<!ENTITY  tooltipCloudDescr2.label "When download is complete, you may then save to:">
 
 <!-- Preferences text -->
 <!ENTITY  pTitle.label  "Options for Download Statusbar">
@@ -76,10 +77,8 @@
 <!ENTITY  pSoundExceptFiletypes.label  "Except for filetypes:">
 
 <!ENTITY  pCloudTab.label  "Cloud Save Tab">
-<!ENTITY  pCloudLocalSaveCaption.label  "When saving to cloud, also save a copy locally">
-<!ENTITY  pCloudLocalSaveAsk.label  "Ask me every time">
-<!ENTITY  pCloudLocalSaveYes.label  "Always save locally">
-<!ENTITY  pCloudLocalSaveNo.label  "Don't save locally">
+<!ENTITY  pEanbleCloudFeature.label  "Enable cloud save feature">
+<!ENTITY  pDisableCloudFeature.label  "Disable cloud save feature">
 <!ENTITY  pCloudAdditionalHosts.label  "Additional hosts">
 <!ENTITY  pCloudEnableAdditionalHosts.label  "Enable additional hosts">
 <!ENTITY  pLocalToCloud.label  "Save local file to cloud">

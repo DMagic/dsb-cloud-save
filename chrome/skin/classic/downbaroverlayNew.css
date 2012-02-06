@@ -419,18 +419,11 @@
 .tt-header {
 	height: 20px;
 	margin: 0;
-	background: #59caf7 url(chrome://downbar/skin/tooltip-sprites.png) 0 -90px repeat-x;
+	background: #21a0dc url(chrome://downbar/skin/tooltip-sprites.png) 0 -90px repeat-x;
 	border-radius: 8px 8px 0 0;
 	-moz-border-radius: 8px 8px 0 0;
-	height: 56px;
+	/*height: 60px;*/
 	padding: 5px 2px 0 0;
-}
-
-.tt-cloud-img {
-	margin: -33px 0 0 -8px;
-	width: 126px;
-	height: 80px;
-	background: url(chrome://downbar/skin/tooltip-sprites.png) 0 0 no-repeat;
 }
 
 .tt-cloud-descr {
@@ -438,3 +431,61 @@
 	color: white;
 	font-weight: bold;
 }
+
+.tt-cloud-descr2 {
+	font-size: .9em;
+	color: black;
+	font-weight: bold;
+}
+
+.tt-cloud-container {
+}
+
+.tt-cloud-img {
+	width: 116px;
+	height: 80px;
+	background: url(chrome://downbar/skin/tooltip-sprites.png) 0 0 no-repeat;
+	margin: -28px 0 0 -8px;
+}
+
+.tt-cloud-switch-container {
+	overflow: hidden;
+	padding-left: 10px;
+	margin-top: -17px;
+}
+
+.tt-cloud-switch {
+	cursor: pointer;
+	width: 71px;
+	height: 21px;
+	position: relative;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+/*
+.off .tt-cloud-img {
+	margin: -53px 0 0 -28px;
+	opacity: .01;
+}
+
+.off .tt-cloud-switch-container {
+	margin-top: -8px;
+}
+*/
+.off .tt-cloud-switch {
+	background: url(chrome://downbar/skin/cloud-switch-mini.png) -42px 0 no-repeat;
+}
+/*
+.on .tt-cloud-img {
+	margin: -23px 0 0 -8px;
+	opacity: .99;
+}
+
+.on .tt-cloud-switch-container {
+	margin-top: -17px;
+}
+*/
+.on .tt-cloud-switch {
+	background: url(chrome://downbar/skin/cloud-switch-mini.png) 0 0 no-repeat;
+}
+

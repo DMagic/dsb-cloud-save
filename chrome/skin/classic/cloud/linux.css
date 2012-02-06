@@ -23,8 +23,22 @@
 }
 
 .tt-cloud-img {
-	margin: -5px 0 0 0;
+	margin: -8px 0 0 0;
 	width: 80px;
 	background: url(chrome://downbar/skin/tooltip-sprites.png) 0 -180px no-repeat;
+}
+
+.tt-cloud-switch-container {
+	padding-left: 7px;
+	margin-top: -32px;
+}
+
+.tt-cloud-descr {
+	font-size: .8em;
+}
+
+.tt-cloud-descr2 {
+	font-size: .8em;
+	margin-bottom: -1px;
 }
 

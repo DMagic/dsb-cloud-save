@@ -47,13 +47,15 @@ function init() {
 		document.getElementById("customSoundHolder").value = pref.getCharPref("downbar.function.soundCustomComplete").substr(7);	
 
 		// Cloud Save
-		var cloudPref = document.getElementById("cloudLocalSave");
-		var cloudPrefVals = cloudPref.getElementsByTagName('radio');
-		for (var i = 0; i < cloudPrefVals.length; ++i)
-			if (cloudPrefVals[i].value == pref.getCharPref("downbar.cloud.localSave")) {
-				cloudPref.selectedItem = cloudPrefVals[i];
-				break;
-			}
+		var cloudPref = document.getElementById("cloudFeature");
+		if (pref.getBoolPref("downbar.function.cloud")) {
+			cloudPref.selectedItem = document.getElementById('enableCloudFeature');
+			toggleCloudOptions(true);
+		} else {
+			cloudPref.selectedItem = document.getElementById('disableCloudFeature');
+			toggleCloudOptions(false);
+		}
+
 		cloudPref = document.getElementById('cloudAdditionalHosts');
 		cloudPref.checked = 'yes' == pref.getCharPref('downbar.cloud.hosts.additional');
 		
@@ -89,6 +91,9 @@ function init() {
 		csp.save(e.target.files, true);
 	}, false);
 
+	document.getElementById("cloudFeature").addEventListener('select', function(e) {
+		toggleCloudOptions('true' == e.target.selectedItem.value);
+	}, false);
 }
 
 function saveSettings() {
@@ -160,7 +165,7 @@ function saveSettings() {
 	pref.setCharPref("downbar.function.soundCustomComplete", "file://" + document.getElementById("customSoundHolder").value); 
 	
 	// Cloud Save
-	pref.setCharPref("downbar.cloud.localSave", document.getElementById("cloudLocalSave").selectedItem.value);
+	pref.setBoolPref('downbar.function.cloud', 'true' == document.getElementById('cloudFeature').selectedItem.value);
 	pref.setCharPref('downbar.cloud.hosts.additional', document.getElementById('cloudAdditionalHosts').checked ? 'yes' : 'no');
 	
 	// Now get a reference to the main browser windows and reset the new display
@@ -598,11 +603,12 @@ function openAboutWindow() {
     var wmed = wm.QueryInterface(Components.interfaces.nsIWindowMediator);
     
     var win = wmed.getMostRecentWindow("navigator:browser");
+    var url = 'chrome://downbar/content/firstrun/firstrun.html';
     if (!win)
-    	win = window.openDialog("chrome://browser/content/browser.xul", "_blank", "chrome,all,dialog=no", 'chrome://downbar/content/aboutdownbar.xul', null, null);
+    	win = window.openDialog("chrome://browser/content/browser.xul", "_blank", "chrome,all,dialog=no", url, null, null);
     else {
     	var content = win.document.getElementById("content");
-    	content.selectedTab = content.addTab('chrome://downbar/content/aboutdownbar.xul');	
+    	content.selectedTab = content.addTab(url);	
     }
 	
 }
@@ -639,4 +645,10 @@ function playCustomSound() {
 	soundURIformat = nsIIOService.newURI(soundLoc,null,null);
 	sound.play(soundURIformat);
 	
+}
+
+function toggleCloudOptions(enable) {
+	document.getElementById('cloudAdditionalHosts').disabled = !enable;
+	document.getElementById('localToCloudHost').disabled = !enable;
+	document.getElementById('localToCloudFile').disabled = !enable;
 }

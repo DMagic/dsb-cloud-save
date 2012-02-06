@@ -3,7 +3,7 @@
 Hosts.box = function uploadBox(file, callback){
   function create_folder(){
     var xhr = new XMLHttpRequest();
-    var fname = 'cloudsave';
+    var fname = applicationName;
     xhr.open('GET', 'https://www.box.net/api/1.0/rest?action=create_folder&api_key='+Keys.box+'&auth_token='+cloudSavePreference.getItem('box_auth')+'&parent_id=0&share=0&name='+fname, true);
     xhr.send();
     xhr.onload = function(){

@@ -327,16 +327,12 @@
 
       <tabpanel id="cloudSaveTab">
        <vbox>
-        <groupbox style="display:none">
-         <caption label="&pCloudLocalSaveCaption.label;"/>
-         <radiogroup id="cloudLocalSave" orient="vertical">
-          <radio id="cloudLocalSaveAsk" value="ask" label="&pCloudLocalSaveAsk.label;" selected="true"/>
-          <radio id="cloudLocalSaveNo" value="no" label="&pCloudLocalSaveNo.label;"/>
-          <radio id="cloudLocalSaveYes" value="yes" label="&pCloudLocalSaveYes.label;"/>
-         </radiogroup>
-        </groupbox>
-       
-        <hbox>
+        <radiogroup id="cloudFeature" orient="vertical">
+         <radio id="enableCloudFeature" value="true" label="&pEanbleCloudFeature.label;" selected="true"/>
+         <radio id="disableCloudFeature" value="false" label="&pDisableCloudFeature.label;"/>
+        </radiogroup>
+
+        <hbox id="cloudOptions">
          <groupbox>
           <caption label="&pCloudAdditionalHosts.label;"/>
           <checkbox id="cloudAdditionalHosts" label="&pCloudEnableAdditionalHosts.label;"/>
@@ -345,8 +341,10 @@
          <groupbox>
           <caption label="&pLocalToCloud.label;"/>
           <hbox>
-           <menulist id="localToCloudHost"><menupopup id="localToCloudHostContailer"></menupopup></menulist>
-           <html:input id="localToCloudFile" type="file" multiple="multiple"/>
+           <menulist id="localToCloudHost">
+            <menupopup id="localToCloudHostContailer"></menupopup>
+           </menulist>
+           <html:input id="localToCloudFile" type="file" multiple="multiple" size="7"/>
           </hbox>
          </groupbox>
         </hbox>

@@ -296,7 +296,7 @@
 -->
                   <!-- new tooltip -->
                   <hbox id="_dlbar_finTipMiddle">
-                    <vbox>
+                    <vbox flex="1">
                       <grid>
                         <column/><column flex="1"/>
                         <rows>
@@ -344,8 +344,14 @@
 
             <!-- tooltip header, contains cloud save controls -->
             <hbox id="_dlbar_ttHeader" class="tt-header" hidden="true">
-              <image id="_dlbar_ttCloudImg" class="tt-cloud-img"/>
+              <vbox id="_dlbar_ttCloudContainer" class="tt-cloud-container off">
+                <image id="_dlbar_ttCloudImg" class="tt-cloud-img"/>
+                <box id="_dlbar_ttCloudSwitchContainer" class="tt-cloud-switch-container">
+                  <image id="_dlbar_ttCloudSwitch" class="tt-cloud-switch"/>
+                </box>
+              </vbox>
               <vbox id="_dlbar_ttCloudContainer" flex="1">
+                <label value="&tooltipCloudDescr2.label;" class="tt-cloud-descr2"/>
                 <menulist id="_dlbar_ttCloudHost"><menupopup id="_dlbar_ttCloudHostContainer"></menupopup></menulist>
                 <label value="" default="&tooltipCloudDescr.label;" class="tt-cloud-descr"/>
               </vbox>
