@@ -36,6 +36,19 @@
 				window.open('chrome://downbar/content/downbarprefs.xul', 'downbar_prefs', 'chrome');
 			});
 
+			/* to top anchor */
+			$('#elevator').click(function() {
+				$('window,body').animate({ scrollTop: 0 }, 'fast');
+			});
+
+			/* smooth scroll anchors */
+			$('a.scroll').click(function() {
+				var dest = 0, achr = $('a[name='+$(this).attr('to')+']')[0];
+				/* jQuery .offset() doesn't work in XUL, have to calculate it ourselves */
+				do { dest += achr.offsetTop } while (achr = achr.offsetParent);
+				$('window,body').animate({ scrollTop: dest }, 'fast');
+			});
+
 			/* set version */
 			try {
 				/* Firefox 3.6 and older */
@@ -74,14 +87,14 @@
 		</div>
 
 		<div class="options">
-			<p><a id="open-options" href="###">&openPref.label;</a></p>
+			<p><a id="open-options" href="javascript:;">&openPref.label;</a></p>
 		</div>
 
 		<nav>
 			<ul>
-				<li><a href="#intro">&introTab.label;</a></li>
-				<li><a href="#hints">&hintsTab.label;</a></li>
-				<li class="nodivider"><a href="#help">&prefsTab.label;</a></li>
+				<li><a class="scroll" href="javascript:;" to="intro">&introTab.label;</a></li>
+				<li><a class="scroll" href="javascript:;" to="hints">&hintsTab.label;</a></li>
+				<li class="nodivider"><a class="scroll" href="javascript:;" to="help">&prefsTab.label;</a></li>
 			</ul>
 			<div class="recommend">
 				<iframe id="recommend-ifm" src="http://enzysoft.com/downbarWelcomeCenter.html" type="content"
@@ -184,7 +197,7 @@
 					</div>
 					<div class="clear"></div>
 				</div>
-				<p><a href="###">What is this?</a></p>
+				<p><a href="javascript:;">What is this?</a></p>
 			</aside>
 		
 			<aside class="howitwork">
@@ -193,7 +206,9 @@
 			</aside>
 		</section>
 	</section>
-	<footer></footer>
+	<footer>
+		<a id="elevator" class="to-top" href="javascript:;">&#8593; top</a>
+	</footer>
 </section>
 </body>
 </window>
