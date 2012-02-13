@@ -36,17 +36,15 @@
 				window.open('chrome://downbar/content/downbarprefs.xul', 'downbar_prefs', 'chrome');
 			});
 
-			/* to top anchor */
-			$('#elevator').click(function() {
-				$('window,body').animate({ scrollTop: 0 }, 'fast');
-			});
-
 			/* smooth scroll anchors */
-			$('a.scroll').click(function() {
-				var dest = 0, achr = $('a[name='+$(this).attr('to')+']')[0];
+			/* skipped in 3.5 and earlier versions because setting .scrollTop doesn't work in 3.5 (why??) */
+			if (!/^1\./.test($.browser.version)) $('a.scroll').click(function(ev) {
+				var dest = 0, achr = $('a[name=' + this.href.replace(/.+#/, '') + ']')[0];
 				/* jQuery .offset() doesn't work in XUL, have to calculate it ourselves */
 				do { dest += achr.offsetTop } while (achr = achr.offsetParent);
 				$('window,body').animate({ scrollTop: dest }, 'fast');
+				ev.stopPropagation();
+				ev.preventDefault();
 			});
 
 			/* set version */
@@ -78,6 +76,7 @@
 <section id="wrapper">
 	<header>
 		<div class="logo">
+			<a name="top"></a>
 			<h1>
 				<a href="https://addons.mozilla.org/addon/download-statusbar/">
 					<img src="images/logo.gif" alt="Download Statusbar"/>
@@ -92,9 +91,9 @@
 
 		<nav>
 			<ul>
-				<li><a class="scroll" href="javascript:;" to="intro">&introTab.label;</a></li>
-				<li><a class="scroll" href="javascript:;" to="hints">&hintsTab.label;</a></li>
-				<li class="nodivider"><a class="scroll" href="javascript:;" to="help">&prefsTab.label;</a></li>
+				<li><a class="scroll" href="#intro">&introTab.label;</a></li>
+				<li><a class="scroll" href="#hints">&hintsTab.label;</a></li>
+				<li class="nodivider"><a class="scroll" href="#help">&prefsTab.label;</a></li>
 			</ul>
 			<div class="recommend">
 				<iframe id="recommend-ifm" src="http://enzysoft.com/downbarWelcomeCenter.html" type="content"
@@ -207,7 +206,7 @@
 		</section>
 	</section>
 	<footer>
-		<a id="elevator" class="to-top" href="javascript:;">&#8593; top</a>
+		<a id="elevator" class="scroll to-top" href="#top">&#8593; top</a>
 	</footer>
 </section>
 </body>
