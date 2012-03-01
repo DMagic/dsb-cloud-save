@@ -22,7 +22,7 @@ Hosts.skydrive = function uploadSkyDrive(req, callback){
 							if (pwned > 5000) {
 								callback("error: Upload failed, cannot get upload parameters");
 							} else if (!vs || !cy) {
-								setTimeout(getParams, 100);
+								setTimeout(function(){ getParams(); }, 100);
 								pwned += 100;
 							} else {
 								upload(cy.getAttribute('value'), vs.getAttribute('value'));

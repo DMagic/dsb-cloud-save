@@ -18,7 +18,7 @@ Hosts.cloudapp = function uploadCloudApp(file, callback){
               chrome.tabs.remove(tab.id);
               uploadCloudApp(file, callback);
             }else{
-              setTimeout(poll, 100)
+              setTimeout(function(){ poll(); }, 100)
             }
           })
         };
@@ -33,7 +33,7 @@ Hosts.cloudapp = function uploadCloudApp(file, callback){
               tab.close()
               uploadCloudApp(file, callback);
             }else{
-              setTimeout(poll, 100)
+              setTimeout(function(){ poll(); }, 100)
             }
           };
           poll();
@@ -48,7 +48,7 @@ Hosts.cloudapp = function uploadCloudApp(file, callback){
 						gBrowser.removeTab(tab);
 						uploadCloudApp(file, callback);
 					} else {
-						setTimeout(poll, 100);
+						setTimeout(function(){ poll(); }, 100);
 					}
 				}
 				poll();

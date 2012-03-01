@@ -727,7 +727,7 @@ function upload(host, url, name) {
     name: name
   }, function(e){
 	  has_uploaded = e && e.url;
-	  setTimeout(upload_callback, 200);
+	  setTimeout(function(){ upload_callback(); }, 200);
     console.log('uploaded file yay', e);
     if(e && typeof e == "string" && e.indexOf('error:') != -1){
       notification.update({

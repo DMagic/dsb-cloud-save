@@ -1,0 +1,113 @@
+<!ENTITY aboutTitle.label "О додатку Download Statusbar">
+<!ENTITY introTab.label "Представљање">
+<!ENTITY by.label "Аутора Девона Јенсена">
+<!ENTITY version.label "Верзија">
+<!ENTITY tagLine.label "Овај додатак омогућава да надгледате преузимања и управљате њима помоћу мале статусне траке.">
+<!ENTITY ifNew.label "Ако до сад нисте користили Download Statusbar, прочитајте остатак текста, који садржи корисне информације за коришћење.">
+<!ENTITY toView.label "Да бисте овај прозор видели касније,">
+<!ENTITY pressAbout.label "отиђите у опције Download Statusbar-а и притисните дугме „О додатку”.">
+<!ENTITY donateText.label "Искрено говорећи, утрошио сам много времена за прављење, одржавање овог додатка, као и и пружање подршке. Ако вам је помогао, молим Вас да размислите о малој донацији. (Налог на Paypal није неопходан. Могу и кредитне картице)">
+<!ENTITY donate.label "Донирај">
+<!ENTITY majorRelease.label "Главно издање!">
+<!ENTITY changelog.label "Шта је ново">
+<!ENTITY whatNewTab.label "Ново у овој верзији">
+<!ENTITY new1.label "-">
+<!ENTITY new2.label "-">
+<!ENTITY new3.label "-">
+<!ENTITY new4.label "-">
+<!ENTITY new5.label "-">
+<!ENTITY new6.label "-">
+<!ENTITY new7.label "-">
+<!ENTITY new8.label "-">
+<!ENTITY new9.label "-">
+<!ENTITY new10.label "-">
+<!ENTITY new11.label "-">
+<!ENTITY hintsTab.label "Савети и трикови">
+<!ENTITY tip1Title.label "Локације привременог приказа">
+<!ENTITY tip1.label "Download Statusbar је замишљен као привремено место за прегледање преузимања која су у току и која су завршена. Држите га чистим, тако што ћете омогућити опцију за аутоматско чишћење или их ручним уклањањем завршених преузимања која Вас више не занимају. Најгоре је кад их се нагомила толико да на крају ништа не можете да пронађете. Увек можете да видите историјат преузимања у Фајерфоксовом управљачу (Алатке &gt; Преузимања). Прочитајте остатак текста да бисте сазнали више трикова за лагано уклањање завршених преузимања.">
+<!ENTITY tip2Title.label "Пречице за најчешће активности">
+<!ENTITY tip2.label "Списак акција за управљање преузимањем можете да видите ако кликнете деним кликом на њега, али постоји неколико бржих начина:">
+<!ENTITY tip2a.label "- Да бисте очистили једно завршено преузимање, кликните средњим кликом.">
+<!ENTITY tip2b.label "- Да бисте очистили СВА завршена преузимања, двапут кликните на празни део статусне траке.">
+<!ENTITY tip2c.label "- Да бисте отворили завршено преузимање, двапут кликните на њега.">
+<!ENTITY tip2d.label "- Да бисте избрисали завршено преузимање, држите притиснуто дугме КТРЛ и кликните средњим кликом.">
+<!ENTITY tip2e.label "- Да бисте паузирали или наставили преузимање, једанпут кликните левим кликом на њега.">
+<!ENTITY tip2f.label "- Да бисте преименовали завршено преузимање, држите притиснуто дугме ШИФТ и кликните левим кликом на њега.">
+<!ENTITY tip3Title.label "Описи алатки">
+<!ENTITY tip3.label "Sometimes you just want more detailed information about a download.  To show a download's statistics, position your mouse cursor over a download and wait for a short bit for the tooltip to appear.  In-progress downloads will show a continuously updating tooltip with information like current speed, size so far and remaining time.  Finished downloads will show information like where the download was saved, its size, how long the download took, and the average speed.">
+<!ENTITY tip4Title.label "Анимације">
+<!ENTITY tip4.label "Skip animations to speed up management actions.  Animations can provide valuable feedback on what is happening to your download (For instance, a red X will indicate when you have requested to delete a finished download), but they can also slow you down.  You can hold down shift while manually removing a download to temporarily stop animations.  Also, you can turn them off completely with the 'downbar.function.useAnimation' setting in about:config">
+<!ENTITY tip5Title.label "Заустављање преузимања">
+<!ENTITY tip5.label ".">
+<!ENTITY tip6Title.label "Управљање са више преузимања одједном">
+<!ENTITY tip6.label "Right-clicking on an empty part of the statusbar (or on the Mini mode button) will provide options for managing several downloads at once. Remove all finished downloads, and pause, stop or cancel all in-progress downloads. You can also switch between Full mode and Mini mode.">
+<!ENTITY tip7Title.label "Минијатурни начин рада">
+<!ENTITY tip7.label "To view the list of downloads, left click on the mini mode download button in the Firefox statusbar.  Once the downloads have popped up, you can manage them in the usual way - right-click to get management actions, middle-click to clear etc.  Right-click on the mini mode button to get the options for managing several downloads at once.  The download button will be hidden if there is nothing in the downloads list.">
+<!ENTITY prefsTab.label "Помоћ за опције">
+<!ENTITY general.label "Основно">
+<!ENTITY pref1Title.label "Обавештења о напретку">
+<!ENTITY pref1.label "- Преузимања у току могу да имају више информација о себи. Изаберите обавештења која желите да видите или их све искључите. Требало би да стану у подразумевану величину преузимања, али величину текста можете да промените у језичку Изглед.">
+<!ENTITY pref2Title.label "Начин рада">
+<!ENTITY pref2.label "- Choose Full mode (separate statusbar) or Mini mode (integrated into Firefox's statusbar).  Try each one to see which you like best.">
+<!ENTITY pref3Title.label "Задржи историјат преузимања">
+<!ENTITY pref3.label "- By default, Firefox keeps a history of all your downloads in the download manager.  When unchecked, this setting will remove a download from the history as soon as it is removed from the statusbar.  Note: in order for this to work correctly, this extension has to take control of the firefox setting 'browser.download.manager.retention'">
+<!ENTITY pref4Title.label "Trim the download history...">
+<!ENTITY pref4.label "- After awhile, the download history list can get very long and slow Firefox down.  Use this to trim the list every time Firefox closes and keep the list to a manageable size.  Note: this feature is in Download Statusbar, but does not directly affect the statusbar itself.">
+<!ENTITY pref5Title.label "Аутоматски настави преузимања...">
+<!ENTITY pref5.label "- If you have downloads in progress and you try to close Firefox, it will popup a warning about canceling the downloads.  Using this feature, the Firefox's download manager will popup instead and continue downloading even though the browser window has closed.">
+<!ENTITY pref6Title.label "Очисти завршена преузимања приликом затварања прегледача">
+<!ENTITY pref6.label "- Чишћење завршених преузимања са статусне траке, али не и из историјата преузимања. Ово не утиче на преузету датотеку.">
+<!ENTITY pref7Title.label "Потврђивање пре брисања...">
+<!ENTITY pref7.label "- This will cause a confirmation message before a file is actually deleted.  Once you delete a file there is no way to get it back (other than re-downloading).">
+<!ENTITY pref8Title.label "Clear a finished download after opening it">
+<!ENTITY pref8.label "- Does not remove the download from the download manager history.">
+<!ENTITY pref9Title.label "Clear a finished download after opening containing folder">
+<!ENTITY pref9.label "- Does not remove the download from the download manager history.">
+<!ENTITY pref10Title.label "Show the 'Downloads Completed' notification">
+<!ENTITY pref10.label "- This is actually a preference built into Firefox but there isn't an easy way to access it.  Recommended off because it is really not necessary when using Download Statusbar">
+<!ENTITY pref11Title.label "Ignore these filetypes">
+<!ENTITY pref11.label "- When downloading these filetypes, they won't show up on the Download Statusbar at all, but they will still be in Firefox's download history.  Each filetype should be separated by a comma, and spaces don't matter.  Example: 'jpg, jpeg, png, gif'  (without quotes)">
+<!ENTITY pref12Title.label "Automatically clear these filetypes...">
+<!ENTITY pref12.label "- Once a download finishes, this will set a timer for it to clear off the statusbar after a set number of seconds.  This is useful because you can see that the download was successful, but you don't have to manage it further unless you want to.  Each filetype should be separated by a comma, and spaces don't matter.  Example: 'jpg, jpeg, png, gif'  (without quotes)  If you would like all files to auto-clear, type in only *">
+<!ENTITY pref13Title.label "Play sound when download completes">
+<!ENTITY pref13.label "- Select a predetermined sound or select your own .WAV file to play when a download completes.  If you would like the sound not to play for particular filetypes, enter them in box. Example: 'jpg, jpeg, png, gif'  (without quotes)">
+<!ENTITY appearance.label "Appearance Tab">
+<!ENTITY pref14Title.label "Default or Custom Style">
+<!ENTITY pref14.label "- Selecting 'Custom Style' will enable all the color-pickers and size boxes.  Selecting 'Default Style' will allow you to quickly switch back to the original style, but the custom style settings are still saved.">
+<!ENTITY pref15Title.label "Colors">
+<!ENTITY pref15.label "- Click on a color box to open a color-picker window for that item.  Click and drag around the palette to find a color you like or just select one of the predefined colors.  If you want to duplicate a color, copy its Hex value and enter it manually in the next color-picker.  You can also press the 'Use Theme Default' button to blank out a previous color choice and let the theme default color show through.  This is generally only useful for the Text color and Statusbar Background color.">
+<!ENTITY pref16Title.label "Use Color Gradients">
+<!ENTITY pref16.label "- If selected, this will overlay a white-to-transparent image over the background color giving your download items a nice 3D feel.  Works in both default and custom styles.">
+<!ENTITY pref17Title.label "Use Animation">
+<!ENTITY pref17.label "- Several download management actions have corresponding animations.  The animations are generally short and hopefully not obnoxious, but they can be turned off.">
+<!ENTITY pref18Title.label "Прикажи ову дугмад:">
+<!ENTITY pref18.label "Одаберите дугме приказ главних преузимања, чишћење завршених преузимања и пребацивање у умањени облик.">
+<!ENTITY pref19Title.label "Боје за брзину">
+<!ENTITY pref19.label "- Turning this on will dynamically change the color of an in-progress download based on how fast the download is going.  This allows you can visually 'see' how fast a download is progressing by glancing at its color.  First, enable speed colors.  Then, set reasonable speed intervals by changing the numbers based on your internet connection type.  (The default settings are based on cable modem speeds)  Finally, click on the color boxes to set a color for each speed interval.  There are several ways this feature could be used.  One idea is to make faster downloads appear brighter than slower downloads.  Another idea is to have the top 3 speed intervals show the same color (no changes), but make the slowest speed interval a warning color so, for example, you will notice if a download drops below 10 KB/sec when the progress bar changes to red.">
+<!ENTITY virusScan.label "Језичак за скенирање антивирусом">
+<!ENTITY pref20Title.label "Ручно скенирај завршена преузимања">
+<!ENTITY pref20.label "- Click the checkbox to enable this feature.  You must agree to the Anti-Virus Feature Agreement before it will work.">
+<!ENTITY pref21Title.label "Не скенирај ове врсте фасцикли">
+<!ENTITY pref21.label "- Each filetype should be separated by a comma, and spaces don't matter.  Example: 'jpg, jpeg, png, gif'  (without quotes)">
+<!ENTITY pref22Title.label "Локација антивирусног програма">
+<!ENTITY pref22.label "- You must already have an anti-virus program installed that is able to accept command-line requests for a manual scan.  Press the '...' button and find the program in your filesystem.">
+<!ENTITY pref23Title.label "Аргументи">
+<!ENTITY pref23.label "- Enter any necessary or optional arguments specific to your anti-virus program.  &#37;1 represents the file that will be scanned (this was previously [Path]) and should appear somewhere in the arguments.  Many programs will work if &#37;1 is the only argument.  Check the documentation of your Anti-Virus software to figure out which arguments work with your program.">
+<!ENTITY listMarker.label ".">
+<!ENTITY OK.label "Затвори">
+<!ENTITY openPref.label "Подешавања">
+<!ENTITY support.label "Подржите пројекат -">
+<!ENTITY donate2.label "Донирајте!">
+<!ENTITY credits.label "Помоћници">
+<!ENTITY transFor.label "На">
+<!ENTITY currLocale.label "српски">
+<!ENTITY locale.label "превео:">
+<!ENTITY translatorName.label "Саша Петровић и ДакСРБИЈА">
+<!ENTITY projectHost.label "Интернетску дистрибуцију пројекта омогућио:">
+<!ENTITY mozdev.label "Mozdev.org">
+<!ENTITY progAndArtwork.label "Дизајн и програмирање:">
+<!ENTITY soundsBy.label "Аутори звука:">
+<!ENTITY soundPeople.label "Далин Јенсен и Девон Јенсен">
+
+<!ENTITY uniblueTip.label      "Tip:">
+<!ENTITY uniblueLink.label     "Click here to scan for System Errors and Optimize PC Performance">
