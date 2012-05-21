@@ -431,9 +431,9 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_progressStack");
                         dlElem.setAttribute("context", "_dlbar_progresscontext");
-                        dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
-                        dlElem.setAttribute("ondblclick", "");
-                        dlElem.setAttribute("ondraggesture", "");
+                        dlElem.addEventListener("click", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+						dlElem.ondblclick = null;
+						dlElem.ondraggesture = null;
 
                         dlElem.firstChild.hidden = false;            // Progress bar and remainder
                         dlElem.lastChild.firstChild.hidden = true;  // Icon stack
@@ -452,10 +452,10 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_pauseStack");
                         dlElem.setAttribute("context", "_dlbar_pausecontext");
-                        dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
-                        dlElem.setAttribute("ondblclick", "");
-                        dlElem.setAttribute("ondraggesture", "");
-
+                        dlElem.addEventListener("click", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+						dlElem.ondblclick = null;
+						dlElem.ondraggesture = null;
+			
                         dlElem.firstChild.hidden = false;            // Progress bar and remainder
                         dlElem.lastChild.firstChild.hidden = true;  // Icon stack
                         dlElem.lastChild.lastChild.hidden = false;  // Progress indicators
@@ -473,9 +473,10 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
                 case 5:  // Queued
                         dlElem.setAttribute("class", "db_progressStack");
                         dlElem.setAttribute("context", "_dlbar_progresscontext");
-                        dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
-                        dlElem.setAttribute("ondblclick", "");
-                        dlElem.setAttribute("ondraggesture", "");
+                        dlElem.addEventListener("click", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+						dlElem.ondblclick = null;
+						dlElem.ondraggesture = null;
+
 
                         dlElem.firstChild.hidden = false;            // Progress bar and remainder
                         dlElem.lastChild.firstChild.hidden = true;  // Icon stack
@@ -520,10 +521,12 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_finishedHbox");
                         dlElem.setAttribute("context", "_dlbar_donecontext");
-                        dlElem.setAttribute("onclick", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
-                        dlElem.setAttribute("ondblclick", "_dlbar_startOpenFinished(this.id); event.stopPropagation();");
-                        dlElem.setAttribute("ondragstart", "_dlbar_startDLElemDrag(this, event);");
-                        dlElem.setAttribute("ondragend", "_dlbar_DLElemDragEnd(this, event);");
+                        dlElem.addEventListener("click", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
+                        dlElem.addEventListener("dblclick", "_dlbar_startOpenFinished(this.id); event.stopPropagation();");
+                        dlElem.addEventListener("dragstart", "_dlbar_startDLElemDrag(this, event);");
+                        dlElem.addEventListener("dragend", "_dlbar_DLElemDragEnd(this, event);");
+
+
                         //dlElem.setAttribute("ondragover", "_dlbar_DLElemDragOver(event);");
                         //dlElem.setAttribute("ondrop", "_dlbar_DLElemOnDrop(event);");
 
@@ -580,9 +583,9 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_notdoneHbox");
                         dlElem.setAttribute("context", "_dlbar_notdonecontext");
-                        dlElem.setAttribute("onclick", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
-                        dlElem.setAttribute("ondblclick", "_dlbar_startit(this.id); event.stopPropagation();");
-                        dlElem.setAttribute("ondraggesture", "");
+                        dlElem.addEventListener("click", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
+                        dlElem.addEventListener("dblclick", "_dlbar_startit(this.id); event.stopPropagation();");
+						dlElem.ondraggesture = null;
 
                         dlElem.firstChild.hidden = true;  // Do canceled downloads keep the percent done?  keep the progress bar there?
                         dlElem.lastChild.firstChild.hidden = false;
@@ -1758,7 +1761,7 @@ function _dlbar_redirectTooltip(origElem, popupElem) {
     // xxx In linux, a mouseout event is sent right away and the popup never shows, delay to avoid that
     // unless I can get rid of the special case below "if(!relTarget && (_dlbar_currTooltipAnchor.id == expOriTarget.id)) {"
     window.setTimeout(function(){
-        popupAnchor.setAttribute("onmouseout", "_dlbar_hideRedirPopup(event);");
+        popupAnchor.addEventListener("mouseout", "_dlbar_hideRedirPopup(event);");
     }, 50);
 
     return false;  // don't show the default tooltip

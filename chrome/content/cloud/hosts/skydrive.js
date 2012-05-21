@@ -128,7 +128,7 @@ Hosts.skydrive = function uploadSkyDrive(req, callback){
 		if (isChrome) {
 			/* chrome */
 			div = document.createElement('div');
-			div.innerHTML = str;
+			div.innerHTML = str; // This is a trick we have to use in chrome ... le sigh.
 			return div.textContent;
 		} else {
 			//gBrowser.contentWindow.wrappedJSObject.document.createElement('div');
