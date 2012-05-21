@@ -106,7 +106,7 @@
 			<menupopup id="_dlbar_progresstip_transparent" class="progresstip_transparent" orient="vertical" noautohide="true" 
 					 onpopupshowing="_dlbar_setupProgTooltip(_dlbar_currTooltipAnchor.id);" 
 					 onpopuphiding="_dlbar_stopTooltip(_dlbar_currTooltipAnchor.id);"
-					 onpopuphidden="_dlbar_currTooltipAnchor.setAttribute('onmouseout', '');"
+					 onpopuphidden="_dlbar_currTooltipAnchor.mouseout = null;"
 					 onmouseout="_dlbar_mouseOutPopup(event);">
 				<hbox/>
 			</menupopup>
@@ -115,7 +115,7 @@
 			<menupopup id="_dlbar_progresstip_opaque" class="progresstip_opaque" orient="vertical" noautohide="true" 
 					 onpopupshowing="_dlbar_setupProgTooltip(_dlbar_currTooltipAnchor.id);" 
 					 onpopuphiding="_dlbar_stopTooltip(_dlbar_currTooltipAnchor.id);"
-					 onpopuphidden="_dlbar_currTooltipAnchor.setAttribute('onmouseout', '');"
+					 onpopuphidden="_dlbar_currTooltipAnchor.mouseout = null;"
 					 onmouseout="_dlbar_mouseOutPopup(event);">
 				<hbox/>
 			</menupopup>	 
@@ -224,7 +224,7 @@
 			<menupopup id="_dlbar_fintip_transparent" class="fintip_transparent" orient="vertical" noautohide="true" 
 					 onpopupshowing="_dlbar_makeFinTip(_dlbar_currTooltipAnchor.id);"
 					 onpopuphiding="_dlbar_closeFinTip();" 
-					 onpopuphidden="_dlbar_currTooltipAnchor.setAttribute('onmouseout', '');"
+					 onpopuphidden="_dlbar_currTooltipAnchor.mouseout = null;"
 					 onmouseout="_dlbar_mouseOutPopup(event);">
 				 <hbox/>
 			</menupopup>
@@ -232,7 +232,7 @@
 			<menupopup id="_dlbar_fintip_opaque" class="fintip_opaque" orient="vertical" noautohide="true" 
 				 	onpopupshowing="_dlbar_makeFinTip(_dlbar_currTooltipAnchor.id);" 
 				 	onpopuphiding="_dlbar_closeFinTip();" 
-				 	onpopuphidden="_dlbar_currTooltipAnchor.setAttribute('onmouseout', '');"
+				 	onpopuphidden="_dlbar_currTooltipAnchor.mouseout = null;"
 				 	onmouseout="_dlbar_mouseOutPopup(event);">
 				 <hbox/>
 			</menupopup>

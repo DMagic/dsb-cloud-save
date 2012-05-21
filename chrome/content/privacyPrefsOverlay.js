@@ -38,7 +38,7 @@ function db_newPaneLoad(newPane) {
 			// Need to try to set the checkbox when it changes
 			var histMenuList = document.getElementById("historyMode");
 			var origCommand = histMenuList.getAttribute("oncommand");
-			histMenuList.setAttribute("oncommand", origCommand + "db_setDLHistoryCheckbox();");
+			histMenuList.addEventListener("command", origCommand + "db_setDLHistoryCheckbox();");
 			
 			// Add label here so people know where to complain if something goes wrong...
 			var checkbox = document.getElementById("rememberDownloads");

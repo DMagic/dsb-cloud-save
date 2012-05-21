@@ -229,9 +229,9 @@ function db_dtaSetStateSpecific(aDLElemID, aState) {
 				
 			dlElem.setAttribute("class", "db_progressStack");
 			dlElem.setAttribute("context", "progresscontext");  // make DTA specific progresscontext
-			dlElem.setAttribute("onclick", "db_dtaProgressClickHandle(this, event); event.stopPropagation();");
-			dlElem.setAttribute("ondblclick", "");
-			dlElem.setAttribute("ondraggesture", "");
+			dlElem.addEventListener("click", "db_dtaProgressClickHandle(this, event); event.stopPropagation();");
+			dlElem.ondblclick = null;
+			dlElem.ondraggesture = null;
 			
 			dlElem.firstChild.hidden = false;            // Progress bar and remainder
 			dlElem.lastChild.firstChild.hidden = true;  // Icon stack
@@ -250,9 +250,9 @@ function db_dtaSetStateSpecific(aDLElemID, aState) {
 
 			dlElem.setAttribute("class", "db_pauseStack");
 			dlElem.setAttribute("context", "pausecontext");
-			dlElem.setAttribute("onclick", "db_dtaProgressClickHandle(this, event); event.stopPropagation();");
-			dlElem.setAttribute("ondblclick", "");
-			dlElem.setAttribute("ondraggesture", "");
+			dlElem.addEventListener("click", "db_dtaProgressClickHandle(this, event); event.stopPropagation();");
+			dlElem.ondblclick = null;
+			dlElem.ondraggesture = null;
 			
 			dlElem.firstChild.hidden = false;            // Progress bar and remainder
 			dlElem.lastChild.firstChild.hidden = true;  // Icon stack
@@ -271,9 +271,9 @@ function db_dtaSetStateSpecific(aDLElemID, aState) {
 		case 64:  // Queued
 			dlElem.setAttribute("class", "db_progressStack");
 			dlElem.setAttribute("context", "progresscontext");
-			dlElem.setAttribute("onclick", "db_dtaProgressClickHandle(this, event); event.stopPropagation();");
-			dlElem.setAttribute("ondblclick", "");
-			dlElem.setAttribute("ondraggesture", "");
+			dlElem.addEventListener("click", "db_dtaProgressClickHandle(this, event); event.stopPropagation();");
+			dlElem.ondblclick = null;
+			dlElem.ondraggesture = null;
 			
 			dlElem.firstChild.hidden = false;            // Progress bar and remainder
 			dlElem.lastChild.firstChild.hidden = true;  // Icon stack
@@ -301,11 +301,9 @@ function db_dtaSetStateSpecific(aDLElemID, aState) {
 
 			dlElem.setAttribute("class", "db_finishedHbox");
 			dlElem.setAttribute("context", "donecontext");
-			dlElem.setAttribute("onclick", "db_dtaFinishedClickHandle(this, event); event.stopPropagation();");
-			dlElem.setAttribute("ondblclick", "db_startOpenFinished(this.id); event.stopPropagation();");
-			//dlElem.setAttribute("ondragstart", "db_startDLElemDrag(this, event);");
-			dlElem.setAttribute("ondragstart", "nsDragAndDrop.startDrag(event, db_dragDropObserver);");
-			//dlElem.setAttribute("ondragend", "db_endDLElemDrag(this, event);");
+			dlElem.addEventListener("click", "db_dtaFinishedClickHandle(this, event); event.stopPropagation();");
+			dlElem.addEventListener("dblclick", "db_startOpenFinished(this.id); event.stopPropagation();");
+			dlElem.addEventListener("dragstart", function() { nsDragAndDrop.startDrag(event, db_dragDropObserver); });
 			
 			// Get icon, fx dlmgr uses contentType to bypass cache, but I've found specifying a size will also bypass cache, 
 			//     - just can't specify same icon size in the inprogress tooltips or that will be cached here
@@ -900,7 +898,7 @@ function db_dtaRedirectTooltip(elem) {
     // xxx In linux, a mouseout event is sent right away and the popup never shows, delay to avoid that
     // unless I can get rid of the special case below "if(!relTarget && (db_currTooltipAnchor.id == expOriTarget.id)) {"
     window.setTimeout(function(){
-    	popupAnchor.setAttribute("onmouseout", "db_hideRedirPopup(event);");
+    	popupAnchor.addEventListener("mouseout", function() { db_hideRedirPopup(event); });
     }, 50);
 	
     return false;  // don't show the default tooltip
