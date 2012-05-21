@@ -232,11 +232,11 @@ Hosts.minus_old = function uploadMinus(file, callback) {
     }
     xhr.send();
   }
-  
+
   function upload(){
     minusGallery.time = +new Date;
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://min.us/api/UploadItem?editor_id="+minusGallery.editor_id+"&filename="+(file.name||'unknown.file'));  
+    xhr.open("POST", "http://min.us/api/UploadItem?editor_id="+minusGallery.editor_id+"&filename="+(file.name||'unknown.file'));
     xhr.onload = function(){
       var info = JSON.parse(xhr.responseText);
       //console.log(xhr.responseText);
@@ -268,7 +268,7 @@ Hosts.minus_old = function uploadMinus(file, callback) {
       "file": file
     })
   }
-  
+
   if(minusGallery.time && minusGallery.time > (+new Date) - (1000 * 60 * 10)){
     //keep uploading to the same gallery until 10 minutes of inactivity
     upload();

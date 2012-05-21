@@ -8,10 +8,10 @@ Hosts.dropbox = function uploadDropbox(file, callback){
     if(dropbox.isAccessGranted()){
         var fname =  file.name;
         var folder = ''
-        
+
         dropbox.getAccountInfo(function(user){
-        
-        
+
+
         dropbox.getDirectoryMetadata(folder + encodeURIComponent(file.name), function(json){
           if(json.error && json.error.indexOf('not found') != -1){
             //yay plop it on the top
@@ -20,26 +20,26 @@ Hosts.dropbox = function uploadDropbox(file, callback){
           }else{
             //no idea. TODO: do something
           }
-          
-          
+
+
         dropbox.putFileContents(folder + fname, file,
           function(){
             console.log('done uploading');
             //yay done. hopefully
               console.log('got stuffs now');
               callback({
-              	url: 'https://www.dropbox.com/' 
+                url: 'https://www.dropbox.com/'
               })
           });
         })
-          
+
           })
-          
+
     }else{
-      setTimeout(poll, 300);
+      setTimeout(function(){ poll(); }, 300);
     }
   };
   poll();
-  
-  
+
+
 }
