@@ -60,6 +60,8 @@ function _dlbar_init() {
 
         }
 
+        document.getElementById("downbarPopupTemp").addEventListener("DOMNodeRemoved", function() { _dlbar_checkHideMiniPopup(); });
+
         _dlbar_readPrefs();
         _dlbar_setStyles();
         _dlbar_checkMiniMode();
@@ -67,7 +69,7 @@ function _dlbar_init() {
         _dlbar_startInProgress();
         _dlbar_checkShouldShow();
 
-        document.getElementById("downbarPopupTemp").addEventListener("DOMNodeRemoved", function() { _dlbar_checkHideMiniPopup(); });
+
 
         // Tooltips needs a delayed startup because for some reason it breaks the back button in Linux and Mac when run in line, see bug 17384
         // Also do integration load here
@@ -1444,7 +1446,6 @@ function _dlbar_setupTooltips() {
                 document.getElementById("_dlbar_progTipRightImg").setAttribute("style", "list-style-image: url('chrome://downbar/skin/rightTooltip_white_square.png');");
                 document.getElementById("_dlbar_progTipMiddle").setAttribute("style", "background-image: url('chrome://downbar/skin/middleTooltip_white_160.png');");
                 document.getElementById("_dlbar_finTipImgPreviewBox").setAttribute("style", "background-image: url('chrome://downbar/skin/middleTooltip_white_160.png');");
-
         }
 }
 
@@ -1707,7 +1708,6 @@ function _dlbar_closeFinTip() {
 
 // Intercept the tooltip and show my fancy tooltip (placed at the correct corner) instead
 function _dlbar_redirectTooltip(origElem, popupElem) {
-
         if(origElem == null)
                 var popupAnchor = popupElem.triggerNode;  // popup.triggerNode was introduced in Firefox 4.0beta4 (per popup) - replaces document.popupNode (per document)
         else
