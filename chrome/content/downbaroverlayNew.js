@@ -67,6 +67,8 @@ function _dlbar_init() {
         _dlbar_startInProgress();
         _dlbar_checkShouldShow();
 
+        document.getElementById("downbarPopupTemp").addEventListener("DOMNodeRemoved", function() { _dlbar_checkHideMiniPopup(); });
+
         // Tooltips needs a delayed startup because for some reason it breaks the back button in Linux and Mac when run in line, see bug 17384
         // Also do integration load here
         window.setTimeout(function(){
@@ -405,11 +407,11 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
                         } catch(e){}
 
 
-                        dlElem.setAttribute("class", "db_progressStack");					
+                        dlElem.setAttribute("class", "db_progressStack");
                         dlElem.setAttribute("context", "_dlbar_progresscontext");
-                        dlElem.addEventListener("click",       "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
-						dlElem.ondblclick = null;
-						dlElem.ondraggesture = null;
+                        dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+            dlElem.ondblclick = null;
+            dlElem.ondraggesture = null;
 
 
 
@@ -430,9 +432,9 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_pauseStack");
                         dlElem.setAttribute("context", "_dlbar_pausecontext");
-                        dlElem.addEventListener("click",       "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
-						dlElem.ondblclick = null;
-						dlElem.ondraggesture = null;
+                        dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+            dlElem.ondblclick = null;
+            dlElem.ondraggesture = null;
 
                         dlElem.firstChild.hidden = false;            // Progress bar and remainder
                         dlElem.lastChild.firstChild.hidden = true;  // Icon stack
@@ -449,11 +451,11 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                 // XXX make queued downloads look different so they don't look stuck
                 case 5:  // Queued
-						dlElem.setAttribute("class", "db_progressStack");
-						dlElem.setAttribute("context", "_dlbar_progresscontext");
-                        dlElem.addEventListener("click",       "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
-						dlElem.ondblclick = null;
-						dlElem.ondraggesture = null;
+            dlElem.setAttribute("class", "db_progressStack");
+            dlElem.setAttribute("context", "_dlbar_progresscontext");
+            dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+            dlElem.ondblclick = null;
+            dlElem.ondraggesture = null;
 
                         dlElem.firstChild.hidden = false;            // Progress bar and remainder
                         dlElem.lastChild.firstChild.hidden = true;  // Icon stack
@@ -498,11 +500,11 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_finishedHbox");
                         dlElem.setAttribute("context",     function(){ _dlbar_donecontext(); });
-                        dlElem.addEventListener("click",       "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
-                        dlElem.addEventListener("dblclick",    "_dlbar_startOpenFinished(this.id); event.stopPropagation();");
-                        dlElem.addEventListener("dragstart",   "_dlbar_startDLElemDrag(this, event);");
-                        dlElem.addEventListener("dragend",     "_dlbar_DLElemDragEnd(this, event);");
-						dlElem.ondraggesture = null;
+                        dlElem.setAttribute("onclick", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
+                        dlElem.setAttribute("ondblclick",    "_dlbar_startOpenFinished(this.id); event.stopPropagation();");
+                        dlElem.setAttribute("ondragstart",   "_dlbar_startDLElemDrag(this, event);");
+                        dlElem.setAttribute("ondragend",     "_dlbar_DLElemDragEnd(this, event);");
+            dlElem.ondraggesture = null;
 
 
                         //dlElem.setAttribute("ondragover", "_dlbar_DLElemDragOver(event);");
@@ -561,9 +563,9 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_notdoneHbox");
                         dlElem.setAttribute("context", "_dlbar_notdonecontext");
-                        dlElem.addEventListener("click", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
-                        dlElem.addEventListener("dblclick", "_dlbar_startit(this.id); event.stopPropagation();");
-                        dlElem.addEventListener("draggesture", "");
+                        dlElem.setAttribute("onclick", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
+                        dlElem.setAttribute("ondblclick", "_dlbar_startit(this.id); event.stopPropagation();");
+                        dlElem.setAttribute("ondraggesture", "");
 
 
                         dlElem.firstChild.hidden = true;  // Do canceled downloads keep the percent done?  keep the progress bar there?
@@ -1743,7 +1745,7 @@ function _dlbar_redirectTooltip(origElem, popupElem) {
     // xxx In linux, a mouseout event is sent right away and the popup never shows, delay to avoid that
     // unless I can get rid of the special case below "if(!relTarget && (_dlbar_currTooltipAnchor.id == expOriTarget.id)) {"
     window.setTimeout(function(){
-        popupAnchor.addEventListener("mouseout", "_dlbar_hideRedirPopup(event);");
+        popupAnchor.setAttribute("onmouseout", "_dlbar_hideRedirPopup(event);");
     }, 50);
 
     return false;  // don't show the default tooltip
@@ -2348,11 +2350,11 @@ function _dlbar_startInProgress() {
 }
 
 function _dlbar_checkHideMiniPopup() {
-
-        // This function will prevent an empty mini mode popup from showing after all the downloads are cleared
-        // This is called from onDOMNodeRemoved from the mini mode, it executes before the element is actually gone, so check if there is 1 left
-        if(document.getElementById('downbar').childNodes.length == 1)
-                _dlbar_hideDownbarPopup();
+  // This function will prevent an empty mini mode popup from showing after all the downloads are cleared
+  // This is called from onDOMNodeRemoved from the mini mode, it executes before the element is actually gone, so check if there is 1 left
+  //d("dlbar_checkHideMiniPopup called...");
+  if(document.getElementById('downbar').childNodes.length == 1)
+    _dlbar_hideDownbarPopup();
 }
 
 function _dlbar_hideDownbarPopup() {
@@ -2716,9 +2718,9 @@ d(destDirectory);
 };
 */
 
-/*
+
 // Dump a message to Javascript Console
 function d(msg){
-        var acs = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
-        acs.logStringMessage(msg);
-}*/
+  var acs = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
+  acs.logStringMessage(msg);
+}
