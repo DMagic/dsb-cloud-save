@@ -49,7 +49,7 @@ def patch_file(file, version):
 def bob_the_builder():
     print("Bob be building")
     os.popen("mkdir build/")
-    os.popen("rm -rf dsb.xpi")    
+    os.popen("rm -rf dsb.xpi")
     os.popen("cp -R chrome build/")
     os.popen("cp -R components build/")
     os.popen("cp -R translations build/")
@@ -57,10 +57,11 @@ def bob_the_builder():
     os.popen("cp -R install.rdf build/")
     os.popen("cp -R chrome.manifest build/")
     os.popen("cp -R license.txt build/")
+    os.popen("find build/ -name '.DS_Store' | xargs rm -f")
     os.chdir("build")
     os.popen("zip -r ../dsb.xpi ./")
     os.chdir("../")
     os.popen("rm -rf build")
-    
+
 if __name__ == "__main__":
     main()
