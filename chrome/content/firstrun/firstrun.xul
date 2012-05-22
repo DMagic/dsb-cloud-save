@@ -64,11 +64,11 @@
 
 		/* adjust the width of recommendation iframe, don't know why this can't be done by addEventListener yet */
 		var adjustRecommend = function(ifm) {
-			var inner, content;
+			var inner, contentElem;
 			/* inner iframe width */
 			inner = ifm.contentDocument.getElementsByTagName('iframe')[0];
-			content = inner.contentDocument.getElementsByClassName('content')[0];
-			ifm.setAttribute('width', content.scrollWidth || inner.scrollWidth);
+			contentElem = inner.contentDocument.getElementsByClassName('content')[0];
+			ifm.setAttribute('width', contentElem.scrollWidth || inner.scrollWidth);
 		}
 	</script>
 </head>
@@ -108,7 +108,7 @@
 			<article class="welcome">
 				<div class="bookmarks"><a href="http://psdslicer.com/projects/2012/jan/12-dsb/#"><img src="images/icon_likeus.gif" alt="Bookmarks"/></a></div>
 
-				<div class="video"><iframe width="503" height="283" src="http://www.youtube.com/embed/qT2E6iIxi0g" frameborder="0" allowfullscreen="true"></iframe></div>
+				<div class="video"><iframe type="content" width="503" height="283" src="http://www.youtube.com/embed/qT2E6iIxi0g" frameborder="0" allowfullscreen="true"></iframe></div>
 
 				<a name="intro"><h3>&tagLine.label;</h3></a>
 				<p>&ifNew.label; &toView.label; &pressAbout.label;</p>

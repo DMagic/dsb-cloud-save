@@ -274,6 +274,7 @@ Hosts.minus_old = function uploadMinus(file, callback) {
     upload();
   }else if(minusGallery.obsolete){
     //when somethings outdated theres a potential race condition
+    // TODO: rewrite this to remove the need to arguments.callee.
     (function(){
       if(minusGallery.obsolete){
         setTimeout(arguments.callee, 100);

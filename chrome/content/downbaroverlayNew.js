@@ -60,16 +60,12 @@ function _dlbar_init() {
 
         }
 
-        document.getElementById("downbarPopupTemp").addEventListener("DOMNodeRemoved", function() { _dlbar_checkHideMiniPopup(); });
-
         _dlbar_readPrefs();
         _dlbar_setStyles();
         _dlbar_checkMiniMode();
         _dlbar_populateDownloads();
         _dlbar_startInProgress();
         _dlbar_checkShouldShow();
-
-
 
         // Tooltips needs a delayed startup because for some reason it breaks the back button in Linux and Mac when run in line, see bug 17384
         // Also do integration load here

@@ -359,7 +359,7 @@
 
 			<panel id="downbarPopup">
 				
-				<vbox id="downbarPopupTemp" pack="end" class="db_downbarPopup" dir="reverse">
+				<vbox id="downbarPopupTemp" pack="end" class="db_downbarPopup" dir="reverse"  onDOMNodeRemoved="_dlbar_checkHideMiniPopup();">
 					<!-- Download elements are inserted here -->
 				</vbox>
 				<hbox equalsize="always" style="margin-top:1px;">
