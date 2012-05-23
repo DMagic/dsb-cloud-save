@@ -507,42 +507,6 @@ function wbr(str, num) {
 
 var INDETERMINATE = {};
 
-
-/* deprecated */
-function updateNotification(id, arg1, arg2){
-        function main(){
-                var wins = chrome.extension.getViews({type:"notification"})
-                var matches = wins.filter(function(win) {
-                        return win.location.search.substr(1) == id
-                });
-                if(id == 42) matches = wins; //please coding gods dont kill me
-                if(matches.length){
-                        if(typeof arg1 == 'number' || arg1 == INDETERMINATE){
-                                matches[0].document.getElementById('progress').style.display = '';
-                                matches[0].document.getElementById('progress').value = arg1 == INDETERMINATE ? null : arg1;
-                        }else if(arg2){
-                                matches[0].document.getElementById('status').innerHTML = arg2;
-                                matches[0].document.body.style.backgroundImage = 'url('+arg1+')';
-                                matches[0].document.getElementById('progress').style.display = 'none'
-                        }else{
-                                matches[0].document.getElementById('status').innerHTML = arg1;
-                        }
-                }else{
-                        return false
-                }
-                return true
-        }
-        if(!main()){
-                console.log('Error! Could not locate notification', id, arg1, arg2);
-                var count = 0;
-                function looper(){
-                        if(!main() && count++ < 100) setTimeout(function() { looper(); }, 10);
-                }
-                looper();
-        }
-}
-
-
 var urlid = {
         'todo_fix_this': 42
         //this is a sort of hack. it uses the file download urls
@@ -565,7 +529,6 @@ function downloadProgress(url, evt){
 
 /* hopefully normalize notification systems in Chrome and Firefox */
 function DsbNotification(args) {
-        /* previously updateNotification() */
         this.constructor.prototype.update = function(args) {
                 var doc = this.wnd.document, prog, status, box, osX, osY;
 
@@ -586,7 +549,7 @@ function DsbNotification(args) {
                 if (args.status) {
                         if (isChrome) {
                                 status = doc.getElementById('status');
-                                status.innerHTML = args.status;
+                                status.innerHTML = args.status; // Chrome-specific, not for Firefox!
                         } else {
                                 status = doc.getElementById('alertTextLabel');
                                 /* updating inner text in XUL is tedious */
@@ -766,7 +729,7 @@ function install_additional(state){
 }
 
 window.addEventListener('load', function() {
-        //an order which shoudl theoretically work, but isnt optimal
+        //an order which should theoretically work, but isn't optimal
         //in any stretch of the imagination
         /*
                 general idea:
