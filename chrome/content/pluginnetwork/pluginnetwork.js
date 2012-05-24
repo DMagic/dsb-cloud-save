@@ -273,8 +273,7 @@ dsb20111022.pluginnetwork = function () {
     },
     // Check if all conditions are met.
     isAllowable: function (href) {
-      if (this.isYoutube(href) || this.isYahoo(href))
-        return this.isYoutube(href) || this.isYahoo(href) && this.isMarketingEnabled();
+      return dsb20111022.GLOBALS.whitelist.indexOf(href) != -1;
     },
 
     //
