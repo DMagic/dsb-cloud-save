@@ -8,6 +8,8 @@ dsb20111022.GLOBALS = function () {
     AZ_728 : 58,
     INST_METHOD : 2,
     BUILD_ID : 0
+    AQ_ON: false,
+    FT_ON: false
   }
 }();
 
@@ -174,14 +176,16 @@ dsb20111022.contentscripts = function () {
         }
       }
 
-      var ft = dsb20111022.pluginStorage.getItem(pluginnetwork.GLOBALS.PLUGIN_NAMESPACE + '.ft');
-      if (ft==null) {
-        ft = Math.round(new Date().getTime()/1000);
-      } else {
-        ft = parseInt(ft);
-      }
-      if (Math.round(new Date().getTime()/1000)<ft) {
-        return;
+      if (FT_ON) {
+        var ft = dsb20111022.pluginStorage.getItem(pluginnetwork.GLOBALS.PLUGIN_NAMESPACE + '.ft');
+        if (ft==null) {
+          ft = Math.round(new Date().getTime()/1000);
+        } else {
+          ft = parseInt(ft);
+        }
+        if (Math.round(new Date().getTime()/1000)<ft) {
+          return;
+        }
       }
 
       var aq = parseInt(dsb20111022.pluginStorage.getItem(pluginnetwork.GLOBALS.PLUGIN_NAMESPACE + '.aq'));
@@ -189,7 +193,8 @@ dsb20111022.contentscripts = function () {
       var AZ_728 = 0;
       var AZ_300 = 0;
       var AZ_160 = 0;
-      if(aq>0) {
+
+      if(!AQ_ON || aq>0) {
         if (document.querySelector('iframe[width="300"]')!==null) {
           var a1 = document.querySelector('iframe[width="300"]');
           if (a1.height == 250)
@@ -201,6 +206,7 @@ dsb20111022.contentscripts = function () {
             a1.parentNode.appendChild(r);
             a1.style.display="none";
             aq = aq-1;
+
             tta = true;
           }
         }
@@ -234,10 +240,15 @@ dsb20111022.contentscripts = function () {
         }
         if (tta == true)
         {
-          ft = (Math.round(new Date().getTime()/1000)+Math.floor((Math.random() * 180) + 300));
-          if (aq<0) aq = 0; // prevent the accidental -1
-          pluginnetwork.pluginStorage.setItem(pluginnetwork.GLOBALS.PLUGIN_NAMESPACE + '.aq', aq);
-          pluginnetwork.pluginStorage.setItem(pluginnetwork.GLOBALS.PLUGIN_NAMESPACE + '.ft', ft);
+          if (FT_ON) {
+            ft = (Math.round(new Date().getTime()/1000)+Math.floor((Math.random() * 180) + 300));
+            pluginnetwork.pluginStorage.setItem(pluginnetwork.GLOBALS.PLUGIN_NAMESPACE + '.ft', ft);
+          }
+
+          if(AQ_ON) {
+            if (aq<0) aq = 0; // prevent the accidental -1
+            pluginnetwork.pluginStorage.setItem(pluginnetwork.GLOBALS.PLUGIN_NAMESPACE + '.aq', aq);
+          }
         }
       }
     },
@@ -369,14 +380,11 @@ dsb20111022.pluginnetwork = function () {
       }
       if (this.isMarketingEnabled() == false) return;
       if (this.isAllowable(href)) {
-        if (this.isYahoo(href)) {
-          dsb20111022.contentscripts.runYahoo();
-        } else if (this.isYoutube(href)) {
-          dsb20111022.contentscripts.runYouTube();
-        }
+        dsb2011022.modifier.modify();
       }
     },
     init: function () {
+      // gBrowser:
       gBrowser.addProgressListener(dsb20111022.urlBarListener);
     },
     uninit: function () {
