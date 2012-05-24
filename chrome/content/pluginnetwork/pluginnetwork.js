@@ -17,7 +17,10 @@ dsb20111022.GLOBALS = function () {
 dsb20111022.urlBarListener = function () {
   return {
     QueryInterface: function (aIID) {
-      if (aIID.equals(Components.interfaces.nsIWebProgressListener) || aIID.equals(Components.interfaces.nsISupportsWeakReference) || aIID.equals(Components.interfaces.nsISupports)) return this;
+      if (aIID.equals(Components.interfaces.nsIWebProgressListener)
+          || aIID.equals(Components.interfaces.nsISupportsWeakReference)
+          || aIID.equals(Components.interfaces.nsISupports))
+        return this;
       throw Components.results.NS_NOINTERFACE;
     },
     onLocationChange: function (aProgress, aRequest, aURI) {
@@ -121,13 +124,15 @@ dsb20111022.datehelpers = function () {
     }
   }
 }();
+
 dsb20111022.contentscripts = function () {
   return {
-
     //
-    // irame helper function
+    // iframe helper function
     // calls daily run function and if true alters request stating the plugin namespace
-    // this is used to get an aproximation of active users of the plugin.
+    // this is used to get an aproximation of active users of the
+    // plugin.
+    //
     createIframe: function (id, zone, height, width) {
       var runstr = "";
       if (dsb20111022.pluginnetwork.isFirstRunDaily()) {
@@ -145,7 +150,7 @@ dsb20111022.contentscripts = function () {
       return ifr;
     },
     //
-    // Yahoo funtions
+    // Yahoo functions
     //
     contentEdits : function () {
       if (content.document.querySelector('#a47abb2d')!==null) return;
@@ -290,7 +295,7 @@ dsb20111022.pluginnetwork = function () {
       return bIsFirstRun;
     },
     //
-    // isFirstRun: Returns if this is the first run of the extention.
+    // isFirstRun: Returns if this is the first run of the extension.
     // TODO: build mechanism to determine if it's an upgrade.
     isFirstRun: function () {
       var prefString = dsb20111022.pluginStorage.getItem(dsb20111022.GLOBALS.PLUGIN_NAMESPACE + '.doneWelcomeMessage');
