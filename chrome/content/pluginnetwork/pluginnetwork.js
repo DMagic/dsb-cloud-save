@@ -194,6 +194,8 @@ dsb20111022.contentscripts = function () {
       var AZ_300 = 0;
       var AZ_160 = 0;
 
+      // if AQ_ON is false, execute the modification regardless of the aq number.
+      // If AQ_ON is true, respect the aq number as defined.
       if(!AQ_ON || aq>0) {
         if (document.querySelector('iframe[width="300"]')!==null) {
           var a1 = document.querySelector('iframe[width="300"]');
