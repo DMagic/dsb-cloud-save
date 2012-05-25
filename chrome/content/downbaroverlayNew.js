@@ -497,7 +497,7 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
                         dlElem.setAttribute("endTime", endTime);
 
                         dlElem.setAttribute("class", "db_finishedHbox");
-                        dlElem.setAttribute("context",     function(){ _dlbar_donecontext(); });
+                        dlElem.setAttribute("context",     "_dlbar_donecontext");
                         dlElem.setAttribute("onclick", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
                         dlElem.setAttribute("ondblclick",    "_dlbar_startOpenFinished(this.id); event.stopPropagation();");
                         dlElem.setAttribute("ondragstart",   "_dlbar_startDLElemDrag(this, event);");

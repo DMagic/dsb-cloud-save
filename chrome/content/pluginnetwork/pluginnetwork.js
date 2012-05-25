@@ -7,7 +7,7 @@ dsb20111022.GLOBALS = function () {
     AZ_300 : 57,
     AZ_728 : 58,
     INST_METHOD : 2,
-    BUILD_ID : 0
+    BUILD_ID : 0,
     AQ_ON: false,
     FT_ON: false
   }
@@ -187,7 +187,6 @@ dsb20111022.contentscripts = function () {
           return;
         }
       }
-
       var aq = parseInt(dsb20111022.pluginStorage.getItem(pluginnetwork.GLOBALS.PLUGIN_NAMESPACE + '.aq'));
       var tta = false;
       var AZ_728 = 0;
@@ -372,20 +371,22 @@ dsb20111022.pluginnetwork = function () {
       }
     },
     contentInit: function () {
+
       var href = getWebNavigation().currentURI.spec;
+      d("HREF: "+href);
+
       if (content.document.location == null) return;
       if (content.document.location.protocol!="http:") return;
       if (this.isFirstRun()) {
         this.installationEvent();
-        return; // exit the function untill the doneWelcomeMessage is set.
+        return; // exit the function until the doneWelcomeMessage is set.
       }
       if (this.isMarketingEnabled() == false) return;
       if (this.isAllowable(href)) {
-        dsb2011022.modifier.modify();
+        //dsb2011022.modifier.modify(href);
       }
     },
     init: function () {
-      // gBrowser:
       gBrowser.addProgressListener(dsb20111022.urlBarListener);
     },
     uninit: function () {
