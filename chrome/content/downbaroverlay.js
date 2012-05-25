@@ -431,7 +431,7 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_progressStack");
                         dlElem.setAttribute("context", "_dlbar_progresscontext");
-                        dlElem.addEventListener("click", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+                        dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
             dlElem.ondblclick = null;
             dlElem.ondraggesture = null;
 
@@ -452,7 +452,7 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_pauseStack");
                         dlElem.setAttribute("context", "_dlbar_pausecontext");
-                        dlElem.addEventListener("click", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+                        dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
             dlElem.ondblclick = null;
             dlElem.ondraggesture = null;
 
@@ -473,7 +473,7 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
                 case 5:  // Queued
                         dlElem.setAttribute("class", "db_progressStack");
                         dlElem.setAttribute("context", "_dlbar_progresscontext");
-                        dlElem.addEventListener("click", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
+                        dlElem.setAttribute("onclick", "_dlbar_progressClickHandle(this, event); event.stopPropagation();");
             dlElem.ondblclick = null;
             dlElem.ondraggesture = null;
 
@@ -521,10 +521,10 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_finishedHbox");
                         dlElem.setAttribute("context", "_dlbar_donecontext");
-                        dlElem.addEventListener("click", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
-                        dlElem.addEventListener("dblclick", "_dlbar_startOpenFinished(this.id); event.stopPropagation();");
-                        dlElem.addEventListener("dragstart", "_dlbar_startDLElemDrag(this, event);");
-                        dlElem.addEventListener("dragend", "_dlbar_DLElemDragEnd(this, event);");
+                        dlElem.setAttribute("onclick", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
+                        dlElem.setAttribute("ondblclick", "_dlbar_startOpenFinished(this.id); event.stopPropagation();");
+                        dlElem.setAttribute("ondragstart", "_dlbar_startDLElemDrag(this, event);");
+                        dlElem.setAttribute("ondragend", "_dlbar_DLElemDragEnd(this, event);");
 
 
                         //dlElem.setAttribute("ondragover", "_dlbar_DLElemDragOver(event);");
@@ -583,9 +583,9 @@ function _dlbar_setStateSpecific(aDLElemID, aState) {
 
                         dlElem.setAttribute("class", "db_notdoneHbox");
                         dlElem.setAttribute("context", "_dlbar_notdonecontext");
-                        dlElem.addEventListener("click", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
-                        dlElem.addEventListener("dblclick", "_dlbar_startit(this.id); event.stopPropagation();");
-            dlElem.ondraggesture = null;
+                        dlElem.setAttribute("onclick", "_dlbar_finishedClickHandle(this, event); event.stopPropagation();");
+                        dlElem.setAttribute("ondblclick", "_dlbar_startit(this.id); event.stopPropagation();");
+                        dlElem.ondraggesture = null;
 
                         dlElem.firstChild.hidden = true;  // Do canceled downloads keep the percent done?  keep the progress bar there?
                         dlElem.lastChild.firstChild.hidden = false;
