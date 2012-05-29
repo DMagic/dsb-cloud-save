@@ -10,7 +10,7 @@
          xmlns:nc="http://home.netscape.com/NC-rdf#"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/x-javascript" src="chrome://downbar/content/cloud/hosts/js/jquery-1.4.4.min.js"></script>
+  <script type="application/x-javascript" src="chrome://downbar/content/lib/jquery-1.7.2.min.js"></script>
 
   <script type="application/x-javascript" src="chrome://downbar/content/cloud/context-menu.js"/>
 
