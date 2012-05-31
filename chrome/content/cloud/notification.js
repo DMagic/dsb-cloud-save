@@ -128,7 +128,9 @@ function onAlertLoad()
 
   window.moveTo(x, y);
 
-  setTimeout(function() { animateAlert(); }, gSlideTime);
+//  setTimeout(function() { animateAlert(); }, gSlideTime);
+  setTimeout(animateAlert, gSlideTime);
+
 }
 
 function animate(step)
@@ -154,7 +156,8 @@ function animateAlert()
   if (gCurrentSize < gFinalSize)
   {
     animate(gSlideIncrement);
-    setTimeout(function() { animateAlert(); }, gSlideTime);
+	setTimeout(animateAlert, gSlideTime);
+//    setTimeout(function() { animateAlert(); }, gSlideTime);
   }
   else
                 /* do not close automatically */
@@ -167,7 +170,8 @@ function animateCloseAlert()
   if (gCurrentSize > 1)
   {
     animate(-gSlideIncrement);
-    setTimeout(function() { animateCloseAlert(); }, gSlideTime);
+	setTimeout(animateCloseAlert, gSlideTime);
+    //setTimeout(function() { animateCloseAlert(); }, gSlideTime);
   }
   else
     closeAlert();

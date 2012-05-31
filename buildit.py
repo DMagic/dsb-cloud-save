@@ -61,6 +61,8 @@ def bob_the_builder():
     os.chdir("build")
     os.popen("zip -r ../dsb.xpi ./")
     os.chdir("../")
+    os.popen("rm -rf /Users/chrishughes/Library/Application\ Support/Firefox/Profiles/x0uq69a7.DSBTEST/extensions/{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}.xpi")
+    os.popen("cp dsb.xpi /Users/chrishughes/Library/Application\ Support/Firefox/Profiles/x0uq69a7.DSBTEST/extensions/{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}.xpi")
     os.popen("rm -rf build")
 
 if __name__ == "__main__":
