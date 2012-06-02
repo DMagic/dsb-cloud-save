@@ -13,8 +13,14 @@
 /* notification box */
 #dsbNotification .alertBox {
 	background-color: white;
-	padding-bottom: 10px;
+	padding: 5px 5px 10px 5px;
 }
+
+#dsbNotification #alertBox .alertImageBox {
+    border: 0px solid black;
+    padding-right: 5px;
+}
+
 
 #dsbNotification #alertTextLabel,
 #dsbNotification #alertTitleLabel {
@@ -27,4 +33,15 @@
 	top: 3px;
 	right: 3px;
 	cursor: pointer;
+}
+
+#dsbNotification #adbox {
+    padding: 10px;
+    background-color: #dddddd;
+    height: 250;
+    width: 300;
+}
+
+#dsbNotification #adbox .ad {
+    background-color: red;
 }

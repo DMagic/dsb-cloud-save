@@ -55,8 +55,18 @@ function prefillAlertInfo()
   }
 }
 
+function d(msg){
+  var acs = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
+  acs.logStringMessage(msg);
+}
+
+
 function onAlertLoad()
 {
+
+  prefillAlertInfo();
+
+  //d('onalertload');
   // Read out our initial settings from prefs.
   try
   {
@@ -71,26 +81,40 @@ function onAlertLoad()
   {
   }
 
+  d('gOrigin: ' + gOrigin);
+  d('NS_ALERT_HORIZONTAL: ' + NS_ALERT_HORIZONTAL);
+  d('NS_ALERT_LEFT: ' + NS_ALERT_LEFT);
+  d('NS_ALERT_TOP: ' + NS_ALERT_TOP);
+  d('screen: ' + screen.width + 'x' + screen.height);
+
+
+
   // Make sure that the contents are fixed at the window edge facing the
   // screen's center so that the window looks like "sliding in" and not
   // like "unfolding". The default packing of "start" only works for
   // vertical-bottom and horizontal-right positions, so we change it here.
-  if (gOrigin & NS_ALERT_HORIZONTAL)
-  {
-    if (gOrigin & NS_ALERT_LEFT)
-      document.documentElement.pack = "end";
+  // if (gOrigin & NS_ALERT_HORIZONTAL)
+  // {
+  //   if (gOrigin & NS_ALERT_LEFT)
+  //     document.documentElement.pack = "end";
 
-    // Additionally, change the orientation so the packing works as intended
-    document.documentElement.orient = "horizontal";
-  }
-  else
-  {
-    if (gOrigin & NS_ALERT_TOP)
-      document.documentElement.pack = "end";
-  }
+  //   d('setting horizontal orientation');
+
+  //   // Additionally, change the orientation so the packing works as intended
+  //   document.documentElement.orient = "horizontal";
+  // }
+  // else
+  // {
+  //   d('not setting horizontal');
+
+  //   if (gOrigin & NS_ALERT_TOP)
+  //     document.documentElement.pack = "end";
+  // }
 
   var alertBox = document.getElementById("alertBox");
-  alertBox.orient = (gOrigin & NS_ALERT_HORIZONTAL) ? "vertical" : "horizontal";
+  d('before:' + alertBox.orient);
+  //alertBox.orient = (gOrigin & NS_ALERT_HORIZONTAL) ? "vertical" : "horizontal";
+  d('after:' + alertBox.orient);
 
   sizeToContent();
 
@@ -99,26 +123,34 @@ function onAlertLoad()
   if (window.innerWidth == contentDim.width + 1)
     --window.innerWidth;
 
-  // Start with a 1px width/height, because 0 causes trouble with gtk1/2
+  // Start with a 1px width/height, because 0 causes trouble with Gk1/2
   gCurrentSize = 1;
 
   // Determine final size
   if (gOrigin & NS_ALERT_HORIZONTAL)
   {
     gFinalSize = window.outerWidth;
-    window.outerWidth = gCurrentSize;
+    //window.outerWidth = gCurrentSize;
   }
   else
   {
     gFinalSize = window.outerHeight;
-    window.outerHeight = gCurrentSize;
+    //window.outerHeight = gCurrentSize;
   }
+
+  d('gFinalSize/window.outerHeight: ' + gFinalSize + '/' + window.outerHeight);
+  d('determine x: ' + (gOrigin & NS_ALERT_LEFT));
+  d('determine y: ' + (gOrigin & NS_ALERT_TOP));
+
+  d ('determining y: ' + screen.availTop + ' + ' + screen.availHeight + ' - ' + window.outerHeight);
 
   // Determine position
   var x = gOrigin & NS_ALERT_LEFT ? screen.availLeft :
           screen.availLeft + screen.availWidth - window.outerWidth;
   var y = gOrigin & NS_ALERT_TOP ? screen.availTop :
-          screen.availTop + screen.availHeight - window.outerHeight;
+          screen.availTop + screen.availHeight;// - window.outerHeight;
+
+  d('x,y: ' + x + ',' + y);
 
   // Offset the alert by 10 pixels from the edge of the screen
   if (gOrigin & NS_ALERT_HORIZONTAL)
@@ -126,37 +158,50 @@ function onAlertLoad()
   else
     x += gOrigin & NS_ALERT_LEFT ? 10 : -10;
 
+  d('screeny: ' + window.screenY);
   window.moveTo(x, y);
+  d('screeny: ' + window.screenY);
+  d('x,y: ' + x + ',' + y);
+  d('gSlideTime: ' + gSlideTime);
 
 //  setTimeout(function() { animateAlert(); }, gSlideTime);
   setTimeout(animateAlert, gSlideTime);
 
 }
 
+
+function watcher () {
+  d('sY: ' + window.screenY);
+}
+//setInterval(watcher, 300);
+
 function animate(step)
 {
+  d('animate: ' + window.screenY + '/ ' + window.outerHeight);
+
   gCurrentSize += step;
 
   if (gOrigin & NS_ALERT_HORIZONTAL)
   {
     if (!(gOrigin & NS_ALERT_LEFT))
       window.screenX -= step;
-    window.outerWidth = gCurrentSize;
+    //window.outerWidth = gCurrentSize;
   }
   else
   {
     if (!(gOrigin & NS_ALERT_TOP))
       window.screenY -= step;
-    window.outerHeight = gCurrentSize;
+    //window.outerHeight = gCurrentSize;
   }
 }
 
 function animateAlert()
 {
+
   if (gCurrentSize < gFinalSize)
   {
     animate(gSlideIncrement);
-	setTimeout(animateAlert, gSlideTime);
+  setTimeout(animateAlert, gSlideTime);
 //    setTimeout(function() { animateAlert(); }, gSlideTime);
   }
   else
@@ -167,10 +212,13 @@ function animateAlert()
 
 function animateCloseAlert()
 {
+// TEMP / NO CHECKIN
+ // return;
+
   if (gCurrentSize > 1)
   {
     animate(-gSlideIncrement);
-	setTimeout(animateCloseAlert, gSlideTime);
+    setTimeout(animateCloseAlert, gSlideTime);
     //setTimeout(function() { animateCloseAlert(); }, gSlideTime);
   }
   else

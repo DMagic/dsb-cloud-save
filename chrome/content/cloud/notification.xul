@@ -50,26 +50,30 @@
   
   <script type="application/javascript" src="chrome://downbar/content/cloud/notification.js"/>
 
-  <box id="alertBox" class="alertBox">
-    
+  <vbox id="alertBox" class="alertBox">
+   
     <hbox class="alertImageBox" align="center" pack="center">
       <image id="alertImage" src="chrome://downbar/skin/cloud/icon/64.png"/>
-    </hbox>
 
-    <vbox id="alertTextBox" class="alertTextBox">
-      <label id="alertTitleLabel" class="alertTitle plain"></label>
-      <description id="alertTextLabel" class="alertText plain"></description>
-      <progressmeter id="progress" value="0" max="100"/>
+      <vbox id="alertTextBox" class="alertTextBox">
+        <label id="alertTitleLabel" class="alertTitle plain"></label>
+        <description id="alertTextLabel" class="alertText plain"></description>
+        <progressmeter id="progress" value="0" max="100"/>
+      </vbox>
+
+      <hbox id="close-box" class="close-box">
+        <image id="close-button" src="chrome://downbar/skin/closeX.png"/>
+      </hbox>
+
+    </hbox>
+ 
+    <vbox id="adbox">
+      <vbox>Presented by:</vbox>
+      <vbox class="ad">123</vbox>
     </vbox>
+    
 
-    <hbox id="close-box" class="close-box">
-      <image id="close-button" src="chrome://downbar/skin/closeX.png"/>
-    </hbox>
 
-  </box>
 
-  <!-- This method is called inline because we want to make sure we establish the width
-       and height of the alert before we fire the onload handler. -->
-  <script type="application/javascript">prefillAlertInfo();</script>
-
+  </vbox>
 </window>
