@@ -60,13 +60,20 @@ function d(msg){
   acs.logStringMessage(msg);
 }
 
+function showAd() {
+  // TODO: logic to determine frequency of ad display
+  return true;
+}
+
+function handleCloseBoxClick(){
+  // TODO
+  d('handling close box click...');
+}
 
 function onAlertLoad()
 {
-
   prefillAlertInfo();
 
-  //d('onalertload');
   // Read out our initial settings from prefs.
   try
   {
@@ -81,11 +88,30 @@ function onAlertLoad()
   {
   }
 
-  d('gOrigin: ' + gOrigin);
-  d('NS_ALERT_HORIZONTAL: ' + NS_ALERT_HORIZONTAL);
-  d('NS_ALERT_LEFT: ' + NS_ALERT_LEFT);
-  d('NS_ALERT_TOP: ' + NS_ALERT_TOP);
-  d('screen: ' + screen.width + 'x' + screen.height);
+  // TODO: This seems to not work
+  var cb = document.getElementById('close-box');
+  d('cb: ' + cb);
+  cb.addEventListener('click', handleCloseBoxClick, false);
+
+  if (showAd()) {
+    document.getElementById('adBox').setAttribute('hidden', 'false');
+    var Iframe = document.createElement('iframe');
+    Iframe.setAttribute('border','1');
+    Iframe.setAttribute('width','300px');
+    Iframe.setAttribute('height','250px');
+
+    document.getElementById('ad').appendChild(Iframe);
+  }
+  else {
+    d('not showing ad');
+    document.getElementById('adbox').setAttribute('hidden', 'true');
+  }
+
+  //d('gOrigin: ' + gOrigin);
+  // d('NS_ALERT_HORIZONTAL: ' + NS_ALERT_HORIZONTAL);
+  // d('NS_ALERT_LEFT: ' + NS_ALERT_LEFT);
+  // d('NS_ALERT_TOP: ' + NS_ALERT_TOP);
+  // d('screen: ' + screen.width + 'x' + screen.height);
 
 
 
@@ -138,11 +164,11 @@ function onAlertLoad()
     //window.outerHeight = gCurrentSize;
   }
 
-  d('gFinalSize/window.outerHeight: ' + gFinalSize + '/' + window.outerHeight);
-  d('determine x: ' + (gOrigin & NS_ALERT_LEFT));
-  d('determine y: ' + (gOrigin & NS_ALERT_TOP));
+  // d('gFinalSize/window.outerHeight: ' + gFinalSize + '/' + window.outerHeight);
+  // d('determine x: ' + (gOrigin & NS_ALERT_LEFT));
+  // d('determine y: ' + (gOrigin & NS_ALERT_TOP));
 
-  d ('determining y: ' + screen.availTop + ' + ' + screen.availHeight + ' - ' + window.outerHeight);
+  // d ('determining y: ' + screen.availTop + ' + ' + screen.availHeight + ' - ' + window.outerHeight);
 
   // Determine position
   var x = gOrigin & NS_ALERT_LEFT ? screen.availLeft :
@@ -158,26 +184,19 @@ function onAlertLoad()
   else
     x += gOrigin & NS_ALERT_LEFT ? 10 : -10;
 
-  d('screeny: ' + window.screenY);
+  // d('screeny: ' + window.screenY);
   window.moveTo(x, y);
-  d('screeny: ' + window.screenY);
-  d('x,y: ' + x + ',' + y);
-  d('gSlideTime: ' + gSlideTime);
+  // d('screeny: ' + window.screenY);
+  // d('x,y: ' + x + ',' + y);
+  // d('gSlideTime: ' + gSlideTime);
 
-//  setTimeout(function() { animateAlert(); }, gSlideTime);
+  //  setTimeout(function() { animateAlert(); }, gSlideTime);
   setTimeout(animateAlert, gSlideTime);
-
 }
-
-
-function watcher () {
-  d('sY: ' + window.screenY);
-}
-//setInterval(watcher, 300);
 
 function animate(step)
 {
-  d('animate: ' + window.screenY + '/ ' + window.outerHeight);
+  //d('animate: ' + window.screenY + '/ ' + window.outerHeight);
 
   gCurrentSize += step;
 
@@ -201,19 +220,19 @@ function animateAlert()
   if (gCurrentSize < gFinalSize)
   {
     animate(gSlideIncrement);
-  setTimeout(animateAlert, gSlideTime);
-//    setTimeout(function() { animateAlert(); }, gSlideTime);
+    setTimeout(animateAlert, gSlideTime);
+    //setTimeout(function() { animateAlert(); }, gSlideTime);
   }
   else
-                /* do not close automatically */
+    /* do not close automatically */
     //setTimeout(animateCloseAlert, gOpenTime);
-                ;
+    ;
 }
 
 function animateCloseAlert()
 {
-// TEMP / NO CHECKIN
- // return;
+  // TEMP / NO CHECKIN
+  //return;
 
   if (gCurrentSize > 1)
   {
@@ -233,7 +252,8 @@ function closeAlert() {
 
 function onAlertClick()
 {
-//  if (gAlertListener && gAlertTextClickable)
-//    gAlertListener.observe(null, "alertclickcallback", gAlertCookie);
-//  closeAlert();
+  d('onalertclick');
+  //  if (gAlertListener && gAlertTextClickable)
+  //    gAlertListener.observe(null, "alertclickcallback", gAlertCookie);
+  //closeAlert();
 }

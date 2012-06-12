@@ -64,16 +64,12 @@
       <hbox id="close-box" class="close-box">
         <image id="close-button" src="chrome://downbar/skin/closeX.png"/>
       </hbox>
-
     </hbox>
  
     <vbox id="adbox">
       <vbox>Presented by:</vbox>
-      <vbox class="ad">123</vbox>
+      <vbox id="ad"></vbox>
     </vbox>
-    
-
-
 
   </vbox>
 </window>

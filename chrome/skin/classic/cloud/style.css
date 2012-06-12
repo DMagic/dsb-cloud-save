@@ -21,6 +21,10 @@
     padding-right: 5px;
 }
 
+#dsbNotification #alertTextBox {
+    border: 0px solid black;
+    padding-left: 5px;
+}
 
 #dsbNotification #alertTextLabel,
 #dsbNotification #alertTitleLabel {
@@ -28,20 +32,21 @@
 	cursor: pointer;
 }
 
+
 .close-box {
 	position: absolute;
 	top: 3px;
 	right: 3px;
 	cursor: pointer;
+  border: 1px solid black;
 }
 
 #dsbNotification #adbox {
     padding: 10px;
-    background-color: #dddddd;
-    height: 250;
-    width: 300;
+    height: 250px;
+    width: 300px;
 }
 
-#dsbNotification #adbox .ad {
-    background-color: red;
+#dsbNotification #adbox #ad {
+    background-color: green;
 }
