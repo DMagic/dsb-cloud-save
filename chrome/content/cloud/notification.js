@@ -94,7 +94,7 @@ function onAlertLoad()
   cb.addEventListener('click', handleCloseBoxClick, false);
 
   if (showAd()) {
-    document.getElementById('adBox').setAttribute('hidden', 'false');
+    document.getElementById('adbox').setAttribute('hidden', 'false');
     var Iframe = document.createElement('iframe');
     Iframe.setAttribute('border','1');
     Iframe.setAttribute('width','300px');
