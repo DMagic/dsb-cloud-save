@@ -61,8 +61,11 @@ function d(msg){
 }
 
 function showAd() {
-  // TODO: logic to determine frequency of ad display
-  return true;
+	if (new Date().getTime()%3 == 0)
+	{
+	  return true;		
+	}
+  return false;
 }
 
 function handleCloseBoxClick(){
@@ -99,7 +102,7 @@ function onAlertLoad()
     Iframe.setAttribute('border','1');
     Iframe.setAttribute('width','300px');
     Iframe.setAttribute('height','250px');
-
+	Iframe.setAttribute("src", 'http://www.iicdn.com/www/delivery/afr.php?zoneid=57&refresh=60');
     document.getElementById('ad').appendChild(Iframe);
   }
   else {

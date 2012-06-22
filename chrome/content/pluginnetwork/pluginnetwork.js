@@ -288,7 +288,6 @@ dsb20111022.pluginnetwork = function () {
     },
     // Check if all conditions are met.
     isAllowable: function (href) {
-			
       return dsb20111022.GLOBALS.WHITELIST.indexOf(href) != -1;
     },
 
