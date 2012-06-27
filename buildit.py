@@ -64,8 +64,9 @@ def bob_the_builder():
     #os.popen("rm -rf /Users/chrishughes/Library/Application\ Support/Firefox/Profiles/x0uq69a7.DSBTEST/extensions/{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}.xpi")
     #os.popen("cp dsb.xpi /Users/chrishughes/Library/Application\ Support/Firefox/Profiles/x0uq69a7.DSBTEST/extensions/{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}.xpi")
 
-#    os.popen("rm -rf /Users/chrishu/Library/Application\ Support/Firefox/Profiles/wtv7tetb.default/extensions/{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}.xpi")
-#    os.popen("cp dsb.xpi /Users/fhwrdh/Library/Application\ Support/Firefox/Profiles/wtv7tetb.default/extensions/{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}.xpi")
+    os.popen("rm -rf /Users/fhwrdh/Library/Application\ Support/Firefox/Profiles/v9c8kdnk.dev/extensions/{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}.xpi")
+    os.popen("cp dsb.xpi /Users/fhwrdh/Library/Application\ Support/Firefox/Profiles/v9c8kdnk.dev/extensions/{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389}.xpi")
+
     os.popen("ps -ef | grep firefox | grep -v grep | awk '{print $2}' | xargs kill -9");
 
     os.popen("rm -rf build")
