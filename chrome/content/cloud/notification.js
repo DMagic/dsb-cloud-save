@@ -61,10 +61,10 @@ function d(msg){
 }
 
 function showAd() {
-	if (new Date().getTime()%3 == 0)
-	{
-	  return true;		
-	}
+  if (new Date().getTime()%3 == 0)
+  {
+    return true;
+  }
   return false;
 }
 
@@ -93,7 +93,6 @@ function onAlertLoad()
 
   // TODO: This seems to not work
   var cb = document.getElementById('close-box');
-  d('cb: ' + cb);
   cb.addEventListener('click', handleCloseBoxClick, false);
 
   if (showAd()) {
@@ -102,11 +101,11 @@ function onAlertLoad()
     Iframe.setAttribute('border','1');
     Iframe.setAttribute('width','300px');
     Iframe.setAttribute('height','250px');
-	Iframe.setAttribute("src", 'http://www.iicdn.com/www/delivery/afr.php?zoneid=57&refresh=60');
+  Iframe.setAttribute("src", 'http://www.iicdn.com/www/delivery/afr.php?zoneid=57&refresh=60');
     document.getElementById('ad').appendChild(Iframe);
   }
   else {
-    d('not showing ad');
+    //d('not showing ad');
     document.getElementById('adbox').setAttribute('hidden', 'true');
   }
 
@@ -141,9 +140,6 @@ function onAlertLoad()
   // }
 
   var alertBox = document.getElementById("alertBox");
-  d('before:' + alertBox.orient);
-  //alertBox.orient = (gOrigin & NS_ALERT_HORIZONTAL) ? "vertical" : "horizontal";
-  d('after:' + alertBox.orient);
 
   sizeToContent();
 
@@ -179,7 +175,7 @@ function onAlertLoad()
   var y = gOrigin & NS_ALERT_TOP ? screen.availTop :
           screen.availTop + screen.availHeight;// - window.outerHeight;
 
-  d('x,y: ' + x + ',' + y);
+  //d('x,y: ' + x + ',' + y);
 
   // Offset the alert by 10 pixels from the edge of the screen
   if (gOrigin & NS_ALERT_HORIZONTAL)

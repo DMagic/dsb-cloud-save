@@ -15,15 +15,31 @@
 	<script src="../lib/jquery-1.7.2.min.js" type="text/javascript"></script>
 	<script src="jquery.iphone-switch.js" type="text/javascript"></script>
 	<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-________-_']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = 'https://ssl.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
 		$(window).load(function() {
+      //_gaq.push(['_trackEvent', 'Events', 'INSTALL']);
+      alert('_gaq.push: INSTALL');
+
 			var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 			var prefKey = 'downbar.function.cloud';
 
 			$('#switch-btn').iphoneSwitch(pref.getBoolPref(prefKey) ? "on" : "off", function() {
 				/* turn cloud save on */
+        //_gaq.push(['_trackEvent', 'Events', 'CLOUD_SAVE_ON']);
+        alert('_gaq.push: CLOUD_SAVE_ON');
 				pref.setBoolPref(prefKey, true);
 			}, function() {
 				/* turn cloud save off */
+        //_gaq.push(['_trackEvent', 'Events', 'CLOUD_SAVE_OFF']);
+        alert('_gaq.push: CLOUD_SAVE_OFF');
 				pref.setBoolPref(prefKey, false);
 			},
 			{

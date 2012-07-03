@@ -80,8 +80,8 @@ if ('undefined' === typeof DsbCSProvider) {
         });
 
         for (var i = 0; i < combined.length; i++) {
-          //toJSON(combined[i]);
           var entry = combined[i];
+          //toJSON(entry);
           src = 'chrome://downbar/skin/cloud/icon/' + entry.host + '.png';
           elem = stub.cloneNode(true);
           image = elem.getElementsByClassName('item-image')[0];
@@ -89,16 +89,13 @@ if ('undefined' === typeof DsbCSProvider) {
           image.setAttribute('src', src);
           label.setAttribute('value', entry.labelValue);
           elem.setAttribute('label', entry.labelValue);
-          elem.setAttribute('value', host);
+          elem.setAttribute('value', entry.host);
           elem.setAttribute('class', 'additional menuitem-iconic');
           elem.setAttribute('src', src);
           elem.context = ctx;
           elem.hidden = (entry.source === "additional") && !showAdditional;
           hosts.appendChild(elem);
-
         }
-
-
       }
     },
 
