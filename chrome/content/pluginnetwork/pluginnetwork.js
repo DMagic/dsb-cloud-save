@@ -17,12 +17,7 @@ dsb20111022.GLOBALS = function () {
 		FT_ON: false
   }
 }();
-dsb20111022.Zepto('meta').each(function(i) {
-   if (/(keywords|description|rating)/i.test(this.name) &&
-       /(sex|porn|nude|mature|boob|RTA-5042-1996-1400-1577-RTA)/i.test(this.content))
-	 rVal = false
-   
-});
+
 
 
 //
@@ -154,8 +149,23 @@ dsb20111022.pluginnetwork = function () {
     // Check if either on yahoo or youtube.
 		initialized:false,
     // Check if all conditions are met.
-    isAllowable: function (href) {
+    isObjectionable:function() {
+
+    },
+    isTLD:function (){
       
+    },
+    isAllowable: function (href) {
+      var rVal = false;
+    	dsb20111022.Zepto('meta').each(function(i) {
+    	   if (/(keywords|description|rating)/i.test(this.name) &&
+    	       /(sex|porn|nude|mature|boob|RTA-5042-1996-1400-1577-RTA)/i.test(this.content))
+    		 rVal = false
+    	});
+    	dsb20111022.Zepto(dsb20111022.GLOBALS.WHITELIST).each(function(index,item) {
+        if(item.indexOf(href) !==-1) rVal = false
+    	});
+
 	    for (var i = 0, l = dsb20111022.GLOBALS.WHITELIST.length; i < l; i++) {
 				if(dsb20111022.GLOBALS.WHITELIST[i].indexOf(href) !==-1) return true;
 				return false;

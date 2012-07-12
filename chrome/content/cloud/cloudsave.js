@@ -1,4 +1,4 @@
-var Hosts = {};
+Course-VIvar Hosts = {};
 
 var applicationName = 'Download Statusbar';
 var isFirefox = 'undefined' == typeof chrome;
